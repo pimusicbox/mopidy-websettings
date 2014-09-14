@@ -18,7 +18,7 @@ Mopidy-WebSettings
    :target: https://coveralls.io/r/woutervanwijk/mopidy-websettings?branch=master
    :alt: Test coverage
 
-Mopidy extension for editing settings in a webinterface
+Mopidy extension for editing settings in a webinterface. Used by Pi MusicBox
 
 
 Installation
@@ -39,7 +39,10 @@ Before starting Mopidy, you can add configuration for
 Mopidy-WebSettings to your Mopidy configuration file::
 
     [websettings]
-    musicbox=true
+    musicbox=false
+    configfile=/etc/mopidy/mopidy.conf
+
+Make sure the config file is writable by the user under which mopidy is running!
 
 
 Project resources
