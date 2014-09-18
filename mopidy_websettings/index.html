@@ -39,7 +39,7 @@
     <div>{{ error }}</div>
         <form action="/updateSettings" method="post" onsubmit="alert('Will update and reboot now...'); return true;">
 
-        {% if websettings__musicbox != "true" %} 
+        {% if websettings__musicbox == "true" %} 
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Network</h2>
@@ -92,7 +92,7 @@
     display: block !important;
 }" value="{{ audio__mixer_volume  }}" min="0" max="100">
 
-        {% if websettings__musicbox != "true" %} 
+        {% if websettings__musicbox == "true" %} 
 
             <label for="musicbox__output">Audio output</label>
             <p>Automatic detection sets to usb audio if an usb audio device is found, else to hdmi, if hdmi is connected at boot, and otherwise to the analog output.
@@ -136,7 +136,7 @@ i2s (HifiBerry et all) cannot be detected automatically. Set it here to be able 
 
         </div>
 
-        {% if websettings__musicbox != "true" %} 
+        {% if websettings__musicbox == "true" %} 
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Music files</h2>
