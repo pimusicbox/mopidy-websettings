@@ -39,10 +39,11 @@ Before starting Mopidy, you can add configuration for
 Mopidy-WebSettings to your Mopidy configuration file::
 
     [websettings]
-    musicbox=false
-    configfile=/etc/mopidy/mopidy.conf
+    enabled = true
+    musicbox = false
+    configfile = /etc/mopidy/mopidy.conf
 
-Make sure the config file is writable by the user under which mopidy is running!
+Make sure the config file is writable by the user under which mopidy is running! And make sure the http extension is working. Go to the ip or url of your mopidy computer and add /settings (e.g. http://musicbox.local/settings or http://192.168.1.10:6680/settings )
 
 
 Project resources

@@ -13,7 +13,7 @@ def get_version(filename):
 
 setup(
     name='Mopidy-WebSettings',
-    version=get_version('mopidy_settings/__init__.py'),
+    version=get_version('mopidy_websettings/__init__.py'),
     url='https://github.com/woutervanwijk/mopidy-websettings',
     license='Apache License, Version 2.0',
     author='Wouter van Wijk',
@@ -37,7 +37,7 @@ setup(
     ],
     entry_points={
         'mopidy.ext': [
-            'settings = mopidy_settings:Extension',
+            'websettings = mopidy_websettings:Extension',
         ],
     },
     classifiers=[
