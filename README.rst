@@ -45,6 +45,7 @@ Mopidy-WebSettings to your Mopidy configuration file::
 
 Make sure the config file is writable by the user under which mopidy is running! And make sure the http extension is working. Go to the ip or url of your mopidy computer and add /settings (e.g. http://musicbox.local/settings or http://192.168.1.10:6680/settings )
 
+For now, the settings are only applied after a reboot, which this extension will try to do. If it doesn't work, a (manual) restart of mopidy is needed. 
 
 Project resources
 =================
@@ -57,7 +58,14 @@ Project resources
 Changelog
 =========
 
-v0.1.0 (UNRELEASED)
+v0.1.1 
 ----------------------------------------
 
-- Initial release.
+- Fixed missing template files in dist
+- Fixed template
+- Reboot after settings are updated (if mopidy instance has the permission to do that, like on musicbox)
+
+v0.1.0 
+----------------------------------------
+
+- Initial release

@@ -1,0 +1,5 @@
+setuptools
+Mopidy >= 0.19
+Pykka >= 1.1
+ConfigObj >= 4.0.0
+Jinja2 >= 2.7

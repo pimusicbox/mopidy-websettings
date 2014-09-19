@@ -13,6 +13,7 @@ import jinja2
 
 __version__ = '0.1.1'
 
+# TODO: If you need to log, use loggers named after the current Python module
 logger = logging.getLogger(__name__)
 
 spec_file = os.path.join(os.path.dirname(__file__), 'settingsspec.ini')
@@ -102,12 +103,10 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
                     iniconfig[item][subitem] = argumentItem
         iniconfig.write()
         logger.info('Rebooting system')
-        self.write("<html><body><h1>Settings Saved!</h1><script>toast('Applying changes (reboot)...', 5000);setTimeout(function(){window.location.assign('/');}, 10000);</script><a href='/'>Back</a></body></html>")
-
-        #using two different methods for reboot
-        os.system("sudo shutdown -r now")
-        os.system("shutdown -r now")
+        #        os.system("sudo shutdown -r now")
+        #        os.system("shutdown -r now")
         #        os.system("/opt/musicbox/startup.sh")
+        self.write("<html><body><h1>Settings Saved!</h1><script>toast('Applying changes (reboot)...', 5000);setTimeout(function(){window.location.assign('/');}, 10000);</script><a href='/'>Back</a></body></html>")
 
 def websettings_app_factory(config, core):
     config_file = config.get('websettings', 'config_file')
