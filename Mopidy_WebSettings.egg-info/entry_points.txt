@@ -1,3 +1,0 @@
-[mopidy.ext]
-websettings = mopidy_websettings:Extension
-
