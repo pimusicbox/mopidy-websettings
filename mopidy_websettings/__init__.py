@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import logging
-import os
+import os, sys, subprocess
 
 import tornado.web
 
@@ -22,6 +22,18 @@ config_file = '/etc/mopidy/mopidy.conf'
 #log_file = '/var/log/mopidy/mopidy.log'
 
 password_mask = '******'
+
+def restart_program():
+    """
+    DOES NOT WORK WELL WITH MOPIDY 
+    Hack from https://www.daniweb.com/software-development/python/code/260268/restart-your-python-program
+    to support updating the settings, since mopidy is not able to do that yet
+    Restarts the current program
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function"""
+    
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 class Extension(ext.Extension):
     dist_name = 'Mopidy-WebSettings'
@@ -79,38 +91,73 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
                     pass
         self.write(template.render ( templateVars ) )
 
+class WebPostRequestHandler(tornado.web.RequestHandler):
+
+    def initialize(self, core):
+        self.core = core
+
     def post(self):
         error = ''
         try:
             iniconfig = ConfigObj(config_file, configspec=spec_file, file_error=True, encoding='utf8')
         except (ConfigObjError, IOError), e:
             error = 'Could not load ini file!'
-        validItems = ConfigObj(spec_file, encoding='utf8')
-        templateVars = {
-            "error": error
-        }
-        #iterate over the items, so that only valid items are processed
-        for item in validItems:
-            for subitem in validItems[item]:
-                itemName = item + '__' + subitem
-                argumentItem = self.get_argument(itemName)
-                if argumentItem:
-                    #don't edit config value if password mask
-                    if subitem[-8:] == 'password':
-                      if argumentItem == password_mask or argumentItem == '':
-                          continue
-                    iniconfig[item][subitem] = argumentItem
-        iniconfig.write()
-        logger.info('Rebooting system')
-        self.write("<html><body><h1>Settings Saved!</h1><script>toast('Applying changes (reboot)...', 5000);setTimeout(function(){window.location.assign('/');}, 10000);</script><a href='/'>Back</a></body></html>")
+        if error == '':
+            validItems = ConfigObj(spec_file, encoding='utf8')
+            templateVars = {
+                "error": error
+            }
+            #iterate over the items, so that only valid items are processed
+            for item in validItems:
+                for subitem in validItems[item]:
+                    itemName = item + '__' + subitem
+                    argumentItem = self.get_argument(itemName)
+                    if argumentItem:
+                        #don't edit config value if password mask
+                        if subitem[-8:] == 'password':
+                          if argumentItem == password_mask or argumentItem == '':
+                              continue
+                        iniconfig[item][subitem] = argumentItem
+            iniconfig.write()
+            error = 'Settings Saved!'
+        message = '<html><body><h1>' + error + '</h1><p>Applying changes (reboot) <br/><a href="/">Back</a><br/></p></body></html>'
+        self.write(message)
 
-        #using two different methods for reboot
+        #logger.info ("restart")
+        #restart_program()
+
+        #using two different methods for reboot for different systems
+        logger.info('Rebooting system')
         os.system("sudo shutdown -r now")
         os.system("shutdown -r now")
         #        os.system("/opt/musicbox/startup.sh")
 
+class WebRebootRequestHandler(tornado.web.RequestHandler):
+
+    def initialize(self, core):
+        self.core = core
+
+    def post(self):
+        logger.info('Halting system')
+        os.system("sudo shutdown -r now")
+        os.system("shutdown -r now")
+
+class WebShutdownRequestHandler(tornado.web.RequestHandler):
+
+    def initialize(self, core):
+        self.core = core
+
+    def post(self):
+        logger.info('Halting system')
+        os.system("sudo shutdown -h now")
+        os.system("shutdown -h now")
+
+
 def websettings_app_factory(config, core):
     config_file = config.get('websettings', 'config_file')
     return [
-        ('/', WebSettingsRequestHandler, {'core': core})
+        ('/', WebSettingsRequestHandler, {'core': core}),
+        ('/update', WebPostRequestHandler, {'core': core}),
+        ('/reboot', WebRebootRequestHandler, {'core': core}),
+        ('/shutdown', WebShutdownRequestHandler, {'core': core})
     ]

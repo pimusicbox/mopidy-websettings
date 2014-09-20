@@ -37,7 +37,7 @@
   <div class="box focus">
     <h3>Settings</h3>
     <div>{{ error }}</div>
-        <form action="/updateSettings" method="post" onsubmit="alert('Will update and reboot now...'); return true;">
+        <form action="update" method="post" onsubmit="alert('Will update and reboot now...'); return true;"> -->
 
         {% if websettings__musicbox == "true" %} 
 
@@ -398,7 +398,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 </select>
             </div>
         </div>
-        <input type="submit" value="Update settings" />
+        <input type="submit" value="Update settings (reboot)" />
       </form>
       <br/><br/>
     </div>
