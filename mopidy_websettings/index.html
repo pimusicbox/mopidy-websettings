@@ -37,9 +37,9 @@
   <div class="box focus">
     <h3>Settings</h3>
     <div>{{ error }}</div>
-        <form action="update" method="post" onsubmit="alert('Will update and reboot now...'); return true;"> -->
+        <form action="update" method="post"> <!-- onsubmit="alert('Will update and reboot now...'); return true;"> -->
 
-        {% if websettings__musicbox == "true" %} 
+        {% if websettings__musicbox == "true" %}
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Network</h2>

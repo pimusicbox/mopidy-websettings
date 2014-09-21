@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 spec_file = os.path.join(os.path.dirname(__file__), 'settingsspec.ini')
 template_file = os.path.join(os.path.dirname(__file__), 'index.html')
-config_file = '/etc/mopidy/mopidy.conf'
+#config_file = '/etc/mopidy/mopidy.conf'
 
 #log_file = '/var/log/mopidy/mopidy.log'
 
@@ -25,13 +25,13 @@ password_mask = '******'
 
 def restart_program():
     """
-    DOES NOT WORK WELL WITH MOPIDY 
+    DOES NOT WORK WELL WITH MOPIDY
     Hack from https://www.daniweb.com/software-development/python/code/260268/restart-your-python-program
     to support updating the settings, since mopidy is not able to do that yet
     Restarts the current program
     Note: this function does not return. Any cleanup action (like
     saving data) must be done before calling this function"""
-    
+
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
@@ -59,7 +59,8 @@ class Extension(ext.Extension):
 
 class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core):
+    def initialize(self, core, config):
+        self.config_file = config.get('websettings')['config_file']
         self.core = core
 
     def get(self):
@@ -67,11 +68,12 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         templateEnv = jinja2.Environment( loader=templateLoader )
         template = templateEnv.get_template(template_file)
         error = ''
+        logger.info(self.config_file)
         #read config file
         try:
-            iniconfig = ConfigObj(config_file, configspec=spec_file, file_error=True, encoding='utf8')
+            iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
         except (ConfigObjError, IOError), e:
-            error = 'Could not load ini file! %s %s %s', e, ConfigObjError, IOError
+            error = 'Could not load ini file! %s %s %s' % (e, ConfigObjError, IOError)
         #read values of valid items (in the spec-file)
         validItems = ConfigObj(spec_file, encoding='utf8')
         templateVars = {
@@ -93,13 +95,14 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
 class WebPostRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core):
+    def initialize(self, core, config):
+        self.config_file = config.get('websettings')['config_file']
         self.core = core
 
     def post(self):
         error = ''
         try:
-            iniconfig = ConfigObj(config_file, configspec=spec_file, file_error=True, encoding='utf8')
+            iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
         except (ConfigObjError, IOError), e:
             error = 'Could not load ini file!'
         if error == '':
@@ -109,9 +112,9 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
             }
             #iterate over the items, so that only valid items are processed
             for item in validItems:
-                for subitem in validItems[item]:
+                for subitem in validItems[ item ]:
                     itemName = item + '__' + subitem
-                    argumentItem = self.get_argument(itemName)
+                    argumentItem = self.get_argument(itemName, default='')
                     if argumentItem:
                         #don't edit config value if password mask
                         if subitem[-8:] == 'password':
@@ -154,10 +157,9 @@ class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
 
 def websettings_app_factory(config, core):
-    config_file = config.get('websettings', 'config_file')
     return [
-        ('/', WebSettingsRequestHandler, {'core': core}),
-        ('/update', WebPostRequestHandler, {'core': core}),
+        ('/', WebSettingsRequestHandler, {'core': core, 'config': config}),
+        ('/update', WebPostRequestHandler, {'core': core, 'config': config}),
         ('/reboot', WebRebootRequestHandler, {'core': core}),
         ('/shutdown', WebShutdownRequestHandler, {'core': core})
     ]
