@@ -121,9 +121,11 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                           if argumentItem == password_mask or argumentItem == '':
                               continue
                         #create section entry if it doesn't exist
-                        if not hasattr(iniconfig, item):
+                        try:
+                            iniconfig[item][subitem] = argumentItem
+                        except:
                             iniconfig[item] = {}
-                        iniconfig[item][subitem] = argumentItem
+                            iniconfig[item][subitem] = argumentItem
             iniconfig.write()
             error = 'Settings Saved!'
         message = '<html><body><h1>' + error + '</h1><p>Applying changes (reboot) <br/><a href="/">Back</a><br/></p></body></html>'

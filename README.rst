@@ -62,7 +62,7 @@ v0.1.3 dev
 ----------------------------------------
 
 - Added YouTube and local support (on or off)
-- Writing the config is more stable
+- Writing the config is more reliable
 - Enabled YouTube, SomaFM, Local, Internetarchive, Podcast by default when not in ini-file (the default of the extensions)
 
 v0.1.2
