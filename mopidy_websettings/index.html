@@ -154,13 +154,13 @@ i2s (HifiBerry et all) cannot be detected automatically. Set it here to be able 
             <label for="network__mount_address">Network Drive</label>
             <p>Mount Windows Network Drive on boot. Type the address exactly like this (samba mount): //servername/mountpoint/directory e.g. //192.168.1.5/musicmount or //server.local/shared/music<br/>
 If the mount needs a username/password, also set it (leave empty for guest-access). Don't forget to let Mopidy/MusicBox scan the contents at first boot (see MusicBox Settings section)</p>
-            <input type="text" name="network__mount_address" value="{{ network__mount_address }}" size="10" maxlength="40"/>
+            <input type="text" name="network__mount_address" value="{{ network__mount_address }}" size="20" maxlength="250"/>
 
             <label for="network__mount_user">Username</label>
-            <input type="text" name="network__mount_user" value="{{ network__mount_user }}" size="15" maxlength="40"/>
+            <input type="text" name="network__mount_user" value="{{ network__mount_user }}" size="15" maxlength="50"/>
 
             <label for="network__mount_password">Password</label>
-            <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15" maxlength="40"/>
+            <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15" maxlength="50"/>
 
             <label for="musicbox__resize_once">Resize filesystem</label><br/>
             <p>Enable this to let MusicBox automatically resize the filesystem of your SD Card, so the system uses all the space of your card. Recommended because otherwise the card might fill up. This is beta, you can lose data on your card if you enable this!! (If so, you can put the original MusicBox image on it again and start over) </p>
@@ -230,7 +230,6 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
       your installation to access your SoundCloud account. <!-- Click here to do that: <a href="#soundcloud" class="img"
             onclick="javascript:auth_soundcloud()"><img src="http://connect.soundcloud.com/2/btn-connect-sc-l.png"
               alt="Connect with SoundCloud"></a>. Or --> To do that, go to <a href="http://www.mopidy.com/authenticate" target="_blank">http://www.mopidy.com/authenticate</a></p>
-<!--            <p>NOTE: Enabling this plugin can mess up the search functionality of MusicBox!</p> -->
             <div>
                 <select name="soundcloud__enabled" data-role="slider"><br/>
                     <option value="false"{% if soundcloud__enabled == "false" %} selected="true"{% endif
@@ -242,7 +241,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="soundcloud__auth_token">Token</label>
             <p>Fill the token here e.g. 1-1111-1111111</p>
             <input type="text" name="soundcloud__auth_token" id="sc_token" value="{{ soundcloud__auth_token }}" size="15" maxlength="40"/>
-<!-- does not work yey            <label for="soundcloud__explore">Explore</label>
+<!-- does not work yet            <label for="soundcloud__explore">Explore</label>
             <p>The explore option lets you define playlists to explore in SoundCloud. For example, if you want Jazz from <a href="https://soundcloud.com/explore/jazz" target="_blank">https://soundcloud.com/explore/jazz</a> your entry would be 'jazz'. More info at <a href="https://github.com/dz0ny/mopidy-soundcloud" target="_blank">https://github.com/dz0ny/mopidy-soundcloud</a>. Seperate with commas. E.g. explore = jazz, electronic/Ambient, pop/New Wave, rock/Indie</p>
             <div data-role="fieldcontain">
                 <textarea rows="8" cols="40" name="soundcloud__explore">{{ soundcloud__explore }}</textarea>
@@ -290,13 +289,13 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
         </div>
 
         <div data-role="collapsible" class="settingscoll">
-            <h2>The Internet Archive</h2>
-            <p>Play (old) sounds, music and speech from The Internet Archive</p>
+            <h2>YouTube</h2>
+            <p>Play sound from YouTube videos (use search to find them)</p>
             <div>
-                <select name="internetarchive__enabled" data-role="slider"><br/>
-                    <option value="false"{% if internetarchive__enabled == "false" %} selected="true"{% endif
+                <select name="youtube__enabled" data-role="slider"><br/>
+                    <option value="false"{% if youtube__enabled == "false" %} selected="true"{% endif
   %}>Off</option>
-                    <option value="true"{% if internetarchive__enabled == "true" %} selected="true"{% endif
+                    <option value="true"{% if (youtube__enabled == "true") or (youtube__enabled is undefined) %} selected="true"{% endif
   %}>On</option>
                 </select>
             </div>
@@ -309,7 +308,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 <select name="podcast__enabled" data-role="slider"><br/>
                     <option value="false"{% if podcast__enabled == "false" %} selected="true"{% endif
   %}>Off</option>
-                    <option value="true"{% if podcast__enabled == "true" %} selected="true"{% endif
+                    <option value="true"{% if (podcast__enabled == "true") or (podcast__enabled is undefined) %} selected="true"{% endif
   %}>On</option>
                 </select>
             </div>
@@ -328,7 +327,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 <select name="tunein__enabled" data-role="slider"><br/>
                     <option value="false"{% if tunein__enabled == "false" %} selected="true"{% endif
   %}>Off</option>
-                    <option value="true"{% if tunein__enabled == "true" %} selected="true"{% endif
+                    <option value="true"{% if (tunein__enabled == "true") or (tunein__enabled is undefined) %} selected="true"{% endif
   %}>On</option>
                 </select>
             </div>
@@ -363,7 +362,33 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 <select name="somafm__enabled" data-role="slider"><br/>
                     <option value="false"{% if somafm__enabled == "false" %} selected="true"{% endif
   %}>Off</option>
-                    <option value="true"{% if somafm__enabled == "true" %} selected="true"{% endif
+                    <option value="true"{% if (somafm__enabled == "true") or (somafm__enabled is undefined) %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+        </div>
+
+        <div data-role="collapsible" class="settingscoll">
+            <h2>Local Files</h2>
+            <p>Play audio files from this device or the network</p>
+            <div>
+                <select name="local__enabled" data-role="slider"><br/>
+                    <option value="false"{% if local__enabled == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if (local__enabled == "true") or (local__enabled is undefined) %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+        </div>
+
+        <div data-role="collapsible" class="settingscoll">
+            <h2>The Internet Archive</h2>
+            <p>Play (old) sounds, music and speech from The Internet Archive</p>
+            <div>
+                <select name="internetarchive__enabled" data-role="slider"><br/>
+                    <option value="false"{% if internetarchive__enabled == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if internetarchive__enabled == "true" or not internetarchive__enabled %} selected="true"{% endif
   %}>On</option>
                 </select>
             </div>

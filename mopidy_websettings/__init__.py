@@ -11,7 +11,7 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 import jinja2
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 logger = logging.getLogger(__name__)
 
@@ -25,13 +25,13 @@ password_mask = '******'
 
 def restart_program():
     """
-    DOES NOT WORK WELL WITH MOPIDY
+    DOES NOT WORK WELL WITH MOPIDY 
     Hack from https://www.daniweb.com/software-development/python/code/260268/restart-your-python-program
     to support updating the settings, since mopidy is not able to do that yet
     Restarts the current program
     Note: this function does not return. Any cleanup action (like
     saving data) must be done before calling this function"""
-
+    
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
@@ -68,7 +68,6 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         templateEnv = jinja2.Environment( loader=templateLoader )
         template = templateEnv.get_template(template_file)
         error = ''
-        logger.info(self.config_file)
         #read config file
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
@@ -91,6 +90,7 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
                     templateVars[itemName] = configValue
                 except:
                     pass
+
         self.write(template.render ( templateVars ) )
 
 class WebPostRequestHandler(tornado.web.RequestHandler):
@@ -120,6 +120,9 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                         if subitem[-8:] == 'password':
                           if argumentItem == password_mask or argumentItem == '':
                               continue
+                        #create section entry if it doesn't exist
+                        if not hasattr(iniconfig, item):
+                            iniconfig[item] = {}
                         iniconfig[item][subitem] = argumentItem
             iniconfig.write()
             error = 'Settings Saved!'
