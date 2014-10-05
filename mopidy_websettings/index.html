@@ -90,22 +90,33 @@
             <label for="audio__mixer_volume">Initial volume:</label>
             <input type="range" name="audio__mixer_volume" style=".ui-slider-input {
     display: block !important;
-}" value="{{ audio__mixer_volume  }}" min="0" max="100">
+}" value="{{ audio__mixer_volume }}{% if (audio__mixer_volume is undefined) %}85{% endif %}" min="0" max="100">
 
         {% if websettings__musicbox == "true" %} 
 
             <label for="musicbox__output">Audio output</label>
-            <p>Automatic detection sets to usb audio if an usb audio device is found, else to hdmi, if hdmi is connected at boot, and otherwise to the analog output.
-i2s (HifiBerry et all) cannot be detected automatically. Set it here to be able to use it.</p>
-        <select name="musicbox__output">
+            <p>Automatic detection sets to usb audio if an usb audio device is found, else to hdmi,
+ if hdmi is connected at boot, and otherwise to the analog output.
+Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it here to be able to use it.</p>
+        <select name="musicbox__output" data-native-menu="true">
             <option value=""{% if musicbox__output == "" %} selected="true"{% endif
   %}>Automatic</option>
             <option value="usb"{% if musicbox__output == "usb" %} selected="true"{% endif
   %}>USB</option>
             <option value="hdmi"{% if musicbox__output == "hdmi" %} selected="true"{% endif
   %}>HDMI</option>
-            <option value="i2s"{% if musicbox__output == "i2s" %} selected="true"{% endif
-  %}>i2s (HifiBerry etc.)</option>
+            <option value="hifiberry_dac"{% if musicbox__output == "hifiberry_dac" %} selected="true"{% endif
+  %}>HifiBerry DAC</option>
+            <option value="hifiberry_digi"{% if musicbox__output == "hifiberry_digi" %} selected="true"{% endif
+  %}>HifiBerry Digi</option>
+            <option value="hifiberry_dacplus"{% if musicbox__output == "hifiberry_dacplus" %} selected="true"{% endif
+  %}>HifiBerry DAC+</option>
+            <option value="iqaudio_dac"{% if musicbox__output == "iqaudio_dac" %} selected="true"{% endif
+  %}>IQ Audio DAC</option>
+<!--            <option value="iqaudio_dacplus"{% if musicbox__output == "iqaudio_dacplus" %} selected="true"{% endif
+  %}>IQ Audio DAC+</option>
+            <option value="wolfson"{% if musicbox__output == "wolfson" %} selected="true"{% endif
+  %}>Wolfson</option> -->
             <option value="analog"{% if musicbox__output == "analog" %} selected="true"{% endif
   %}>Analog</option>
         </select>
