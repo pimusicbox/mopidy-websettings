@@ -53,6 +53,7 @@
             <input type="text" name="network__workgroup" value="{{ network__workgroup }}" size="15" maxlength="40"/>
 
             <label for="network__enable_ssh">Enable SSH</label><br/>
+            <p>For security reasons, change the root password if you enable this.</p>
             <div>
                 <select name="network__enable_ssh" data-role="slider"><br/>
                     <option value="false"{% if network__enable_ssh == "false" %} selected="true"{% endif
@@ -79,6 +80,28 @@
             <label for="musicbox__root_password">Root password</label>
             <p>To secure your device, you can change the default password of root, the superuser.</p>
             <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15" maxlength="40"/>
+
+            <label for="musicbox__enable_shairport">Enable AirPlay</label><br/>
+            <p>Enable streaming audio from iPhone, iPad, Mac, iPod using ShairPort (AirPlay) to MusicBox.</p>
+            <div>
+                <select name="musicbox__enable_shairport" data-role="slider"><br/>
+                    <option value="false"{% if musicbox__enable_shairport == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if musicbox__enable_shairport == "true" %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+
+            <label for="musicbox__enable_upnp">Enable DLNA/uPnP/OpenHome</label><br/>
+            <p>Enable streaming music to MusicBox using DLNA/uPnP/OpenHome.</p>
+            <div>
+                <select name="musicbox__enable_upnp" data-role="slider"><br/>
+                    <option value="false"{% if musicbox__enable_upnp == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
 
         </div>
 
