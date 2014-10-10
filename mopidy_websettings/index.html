@@ -29,7 +29,15 @@
         .ui-slider-track {
             margin-left: 4em;
         }
-
+        label {
+            font-weight: bold !important;
+            margin-top: 1em !important;
+            margin-bottom: 0.1em !important;
+        }
+        p {
+            margin: 0 !important;
+            margin-top: 0.2em !important;
+        }
     </style>
 </head>
 
@@ -52,7 +60,7 @@
             <p>Here you can change the default workgroup of the Windows network. This will set the workgroup to the name you want</p>
             <input type="text" name="network__workgroup" value="{{ network__workgroup }}" size="15" maxlength="40"/>
 
-            <label for="network__enable_ssh">Enable SSH</label><br/>
+            <label for="network__enable_ssh">Enable SSH</label>
             <p>For security reasons, change the root password if you enable this.</p>
             <div>
                 <select name="network__enable_ssh" data-role="slider"><br/>
@@ -81,7 +89,7 @@
             <p>To secure your device, you can change the default password of root, the superuser.</p>
             <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15" maxlength="40"/>
 
-            <label for="musicbox__enable_shairport">Enable AirPlay</label><br/>
+            <label for="musicbox__enable_shairport">AirPlay Streaming</label>
             <p>Enable streaming audio from iPhone, iPad, Mac, iPod using ShairPort (AirPlay) to MusicBox.</p>
             <div>
                 <select name="musicbox__enable_shairport" data-role="slider"><br/>
@@ -92,7 +100,7 @@
                 </select>
             </div>
 
-            <label for="musicbox__enable_upnp">Enable DLNA/uPnP/OpenHome</label><br/>
+            <label for="musicbox__enable_upnp">DLNA/uPnP/OpenHome Streaming</label>
             <p>Enable streaming music to MusicBox using DLNA/uPnP/OpenHome.</p>
             <div>
                 <select name="musicbox__enable_upnp" data-role="slider"><br/>
@@ -144,7 +152,7 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
   %}>Analog</option>
         </select>
 
-            <label for="musicbox__downsample_usb">Downsample USB</label><br/>
+            <label for="musicbox__downsample_usb">Downsample USB</label>
             <p>Because of limitations with some USB-DACs, MusicBox downsamples USB sound to 44k by default. You can disable this here.</p>
             <div>
                 <select name="musicbox__downsample_usb" data-role="slider"><br/>
@@ -155,7 +163,7 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
                 </select>
             </div>
 
-            <label for="audio__mixer">Hardware Mixer</label><br/>
+            <label for="audio__mixer">Hardware Mixer</label>
             <p>For some USB audiocards (DACs), you can enable hardware mixing of the volume.</p>
             <div>
                 <select name="audio__mixer" data-role="slider"><br/>
@@ -174,7 +182,7 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Music files</h2>
-            <label for="musicbox__scan_always">Scan Music Files</label><br/>
+            <label for="musicbox__scan_always">Scan Music Files</label>
             <p>Use this setting to let Mopidy/MusicBox scan on startup for new music files on the SD Card, USB or the Network. This could take a while! This can slowdown the boot a lot. Disable it again if your music doesn't change.</p>
             <div>
                 <select name="musicbox__scan_always" data-role="slider"><br/>
@@ -196,7 +204,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="network__mount_password">Password</label>
             <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15" maxlength="50"/>
 
-            <label for="musicbox__resize_once">Resize filesystem</label><br/>
+            <label for="musicbox__resize_once">Resize filesystem</label>
             <p>Enable this to let MusicBox automatically resize the filesystem of your SD Card, so the system uses all the space of your card. Recommended because otherwise the card might fill up. This is beta, you can lose data on your card if you enable this!! (If so, you can put the original MusicBox image on it again and start over) </p>
             <div>
                 <select name="musicbox__resize_once" data-role="slider"><br/>
@@ -447,7 +455,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <input type="text" name="subsonic__username" value="{{ subsonic__username }}" size="15" maxlength="40"/>
             <label for="subsonic__api_key">Password</label>
             <input type="password" name="subsonic__password" value="{{ subsonic__password }}" size="15" maxlength="40"/>
-            <label for="subsonic__ssl">Enable SSL</label><br/>
+            <label for="subsonic__ssl">Enable SSL</label>
             <div>
                 <select name="subsonic__ssl" data-role="slider"><br/>
                     <option value="no"{% if subsonic__ssl == "no" %} selected="true"{% endif
