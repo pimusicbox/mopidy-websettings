@@ -18,7 +18,7 @@ Mopidy-WebSettings
    :target: https://coveralls.io/r/woutervanwijk/mopidy-websettings?branch=master
    :alt: Test coverage
 
-Mopidy extension for editing settings in a webinterface. Used by Pi MusicBox
+Mopidy extension for editing settings in a webinterface. Used by Pi MusicBox, but also usable for personal installations or other projects, since MusicBox-only settings are hidden automatically.
 
 
 Installation
@@ -62,8 +62,10 @@ v0.1.3 dev
 ----------------------------------------
 
 - Added YouTube and local support (on or off)
-- Writing the config is more reliable
 - Enabled YouTube, SomaFM, Local, Internetarchive, Podcast by default when not in ini-file (the default of the extensions)
+- Settings for enabling streaming services shairport and upmpdcli (for MusicBox only)
+- Writing the config is more reliable
+- Better layout
 
 v0.1.2
 ----------------------------------------

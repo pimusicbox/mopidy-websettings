@@ -14,11 +14,11 @@
 
     <meta http-equiv="cleartype" content="on">
     <title>MusicBox Settings</title>
-    
+
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
-    
+
     <meta name="description" content="MusicBox">
     <meta name="author" content="Wouter van Wijk">
     <meta name="copyright" content="(c) 2012-2014 Wouter van Wijk"/>
@@ -113,7 +113,7 @@
 
         </div>
 
-         {% endif %} 
+         {% endif %}
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Audio</h2>
@@ -123,7 +123,7 @@
     display: block !important;
 }" value="{{ audio__mixer_volume }}{% if (audio__mixer_volume is undefined) %}85{% endif %}" min="0" max="100">
 
-        {% if websettings__musicbox == "true" %} 
+        {% if websettings__musicbox == "true" %}
 
             <label for="musicbox__output">Audio output</label>
             <p>Automatic detection sets to usb audio if an usb audio device is found, else to hdmi,
@@ -174,11 +174,11 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
                 </select>
             </div>
 
-        {% endif %} 
+        {% endif %}
 
         </div>
 
-        {% if websettings__musicbox == "true" %} 
+        {% if websettings__musicbox == "true" %}
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Music files</h2>
@@ -217,7 +217,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         </div>
 
-        {% endif %} 
+        {% endif %}
 
     <h3>Services</h3>
         <div data-role="collapsible" class="settingscoll">
@@ -294,7 +294,6 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
         <div data-role="collapsible" class="settingscoll">
             <h2>Google Music</h2>
             <p>(Beta) Please provide your username, password to enable Google Music. You have to supply a device-id too.</p>
-            <p>NOTE: This could slowdown the startup of MusicBox for a while. Please be patient after rebooting.</p>
             <div>
                 <select name="gmusic__enabled" data-role="slider"><br/>
                     <option value="false"{% if gmusic__enabled == "false" %} selected="true"{% endif
