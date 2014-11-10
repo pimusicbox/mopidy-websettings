@@ -21,7 +21,7 @@ template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 
 #log_file = '/var/log/mopidy/mopidy.log'
 
-password_mask = '******'
+password_mask = '*'
 
 def restart_program():
     """
@@ -86,7 +86,7 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
                     configValue = iniconfig[item][subitem]
                     #compare last 8 caracters of subitemname
                     if subitem[-8:] == 'password' and configValue != '':
-                        configValue = password_mask
+                        configValue = password_mask * len(iniconfig[item][subitem])
                     templateVars[itemName] = configValue
                 except:
                     pass
