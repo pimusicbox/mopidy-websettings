@@ -205,6 +205,79 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
         </div>
 
         <div data-role="collapsible" class="settingscoll">
+            <h2>AudioAddict</h2>
+            <p>Enable playing music from the AudioAddict network of sites, including Digitally Imported, RadioTunes, RockRadio, JazzRadio and FrescaRadio.</p>
+            <div>
+                <select name="audioaddict__enabled" data-role="slider"><br/>
+                    <option value="false"{% if audioaddict__enabled == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if audioaddict__enabled == "true" %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+            <label for="audioaddict__username">Username</label>
+            <input type="text" name="audioaddict__username" value="{{ audioaddict__username }}" size="15" maxlength="40"/>
+            <label for="audioaddict__password">Password</label>
+            <input type="password" name="audioaddict__password" value="{{ audioaddict__password }}" size="10" maxlength="40"/>
+            <label for="audioaddict__bitrate">Music Quality (bitrate)</label>
+        <select name="audioaddict__quality">
+            <option value="40k"{% if audioaddict__quality == "40k" %} selected="true"{% endif
+  %}>Lowest, low network usage (40kbps)</option>
+            <option value="64k"{% if audioaddict__quality == "64k" %} selected="true"{% endif
+  %}>Medium, medium network usage (64kbps)</option>
+            <option value="128k"{% if audioaddict__quality == "128k" %} selected="true"{% endif
+  %}>Great, higher network usage (128kbps)</option>
+            <option value="320k"{% if audioaddict__quality == "320k" %} selected="true"{% endif
+  %}>Excellent, higher network usage (320kbps)</option>
+        </select>
+        <div>
+          <label for="audioaddict__difm">Enable DI.FM?</label>
+          <select name="audioaddict__difm" data-role="slider"><br/>
+            <option value="false"{% if audioaddict__difm == "false" %} selected="true"{% endif
+  %}>Off</option>
+            <option value="true"{% if audioaddict__difm == "true" %} selected="true"{% endif
+  %}>On</option>
+          </select>
+        </div>
+        <div>
+          <label for="audioaddict__radiotunes">Enable RadioTunes?</label>
+          <select name="audioaddict__radiotunes" data-role="slider"><br/>
+            <option value="false"{% if audioaddict__radiotunes == "false" %} selected="true"{% endif
+  %}>Off</option>
+            <option value="true"{% if audioaddict__radiotunes == "true" %} selected="true"{% endif
+  %}>On</option>
+          </select>
+        </div>
+        <div>
+          <label for="audioaddict__rockradio">Enable RockRadio?</label>
+          <select name="audioaddict__rockradio" data-role="slider"><br/>
+            <option value="false"{% if audioaddict__rockradio == "false" %} selected="true"{% endif
+  %}>Off</option>
+            <option value="true"{% if audioaddict__rockradio == "true" %} selected="true"{% endif
+  %}>On</option>
+          </select>
+        </div>
+        <div>
+          <label for="audioaddict__jazzradio">Enable JazzRadio?</label>
+          <select name="audioaddict__jazzradio" data-role="slider"><br/>
+            <option value="false"{% if audioaddict__jazzradio == "false" %} selected="true"{% endif
+  %}>Off</option>
+            <option value="true"{% if audioaddict__jazzradio == "true" %} selected="true"{% endif
+  %}>On</option>
+          </select>
+        </div>
+        <div>
+          <label for="audioaddict__frescaradio">Enable FrescaRadio?</label>
+          <select name="audioaddict__frescaradio" data-role="slider"><br/>
+            <option value="false"{% if audioaddict__frescaradio == "false" %} selected="true"{% endif
+  %}>Off</option>
+            <option value="true"{% if audioaddict__frescaradio == "true" %} selected="true"{% endif
+  %}>On</option>
+          </select>
+        </div>
+        </div>
+
+        <div data-role="collapsible" class="settingscoll">
             <script src="//connect.soundcloud.com/sdk.js"></script>
               <script>
                 SC.initialize({
