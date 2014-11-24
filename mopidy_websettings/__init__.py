@@ -11,7 +11,7 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 import jinja2
 
-__version__ = '0.1.4'
+__version__ = '0.1.4.1'
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +118,7 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                     if argumentItem:
                         #don't edit config value if password mask
                         if subitem[-8:] == 'password':
-                          if argumentItem == password_mask or argumentItem == '':
+                          if argumentItem == (password_mask * len(argumentItem)) or argumentItem == '':
                               continue
                         #create section entry if it doesn't exist
                         try:

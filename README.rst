@@ -58,7 +58,18 @@ Project resources
 Changelog
 =========
 
-v0.1.3 dev
+v0.1.4.1
+----------------------------------------
+
+- Small fix for passwords not updated well
+
+v0.1.4
+----------------------------------------
+
+- AudioAddict added (by Nilicule)
+- Passwords mask same size as password
+
+v0.1.3 
 ----------------------------------------
 
 - Added YouTube and local support (on or off)
