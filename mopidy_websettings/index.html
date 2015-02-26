@@ -80,7 +80,7 @@
 
             <label for="musicbox__autoplay">Autoplay Url</label>
             <p>MusicBox can automatically start playing a radiostation or stream at startup. It will wait a number of seconds before trying to play, to give the system (Mopidy) time to start. Since this time can vary per device, network and configuration, you can also set the number of seconds. If it does not work, give the system more time, e.g. 60 seconds.</p>
-            <input type="text" name="musicbox__autoplay" value="{{ musicbox__autoplay }}" size="15" maxlength="40"/>
+            <input type="text" name="musicbox__autoplay" value="{{ musicbox__autoplay }}" size="15" maxlength="300"/>
 
             <label for="musicbox__autoplaywait">Wait time</label>
             <input type="range" name="musicbox__autoplaywait" value="{{ musicbox__autoplaywait }}" min="0" max="600">
