@@ -58,6 +58,11 @@ Project resources
 Changelog
 =========
 
+v0.1.4.2 (26/3/2015)
+--------------------
+
+- Fixed length of Autoplay URL input box.
+
 v0.1.4.1
 ----------------------------------------
 
