@@ -67,7 +67,7 @@
                 </select>
             </div>
             <label for="network__wifi_scan_ssid">Connect to hidden Wifi network</label>
-            <p>Should be enabled if Wifi network is hidden (SSID broadcasting is disabled).</p>
+            <p>Should be enabled if Wifi network is hidden (SSID broadcasting is disabled). Always required on some Wifi adapters with buggy drivers.</p>
             <div>
                 <select name="network__wifi_scan_ssid" data-role="slider"><br/>
                     <option value="false"{% if network__wifi_scan_ssid == "false" %} selected="true"{% endif
