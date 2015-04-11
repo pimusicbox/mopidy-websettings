@@ -72,7 +72,7 @@
                 <select name="network__wifi_scan_ssid" data-role="slider"><br/>
                     <option value="false"{% if network__wifi_scan_ssid == "false" %} selected="true"{% endif
   %}>Off</option>
-                    <option value="true"{% if network__wifi_scan_ssid == "true" %} selected="true"{% endif
+                    <option value="true"{% if network__wifi_scan_ssid != "false" %} selected="true"{% endif
   %}>On</option>
                 </select>
             </div>
