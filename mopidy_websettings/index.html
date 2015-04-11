@@ -56,6 +56,27 @@
             <label for="network__wifi_password">Wifi Password</label>
             <input type="password" name="network__wifi_password" value="{{ network__wifi_password }}" size="10" maxlength="63"/>
 
+            <label for="network__wifi_wpa2_aes">Use only WPA2-AES</label>
+            <p>Enhances Wifi security, not supported by all Wifi access points/routers.</p>
+            <div>
+                <select name="network__wifi_wpa2_aes" data-role="slider"><br/>
+                    <option value="false"{% if network__wifi_wpa2_aes == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if network__wifi_wpa2_aes == "true" %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+            <label for="network__wifi_scan_ssid">Connect to hidden Wifi</label>
+            <p>Should be enabled if Wifi network is hidden (SSID broadcasting is disabled).</p>
+            <div>
+                <select name="network__wifi_scan_ssid" data-role="slider"><br/>
+                    <option value="false"{% if network__wifi_scan_ssid == "false" %} selected="true"{% endif
+  %}>Off</option>
+                    <option value="true"{% if network__wifi_scan_ssid == "true" %} selected="true"{% endif
+  %}>On</option>
+                </select>
+            </div>
+
             <label for="network__workgroup">Workgroup</label>
             <p>Here you can change the default workgroup of the Windows network. This will set the workgroup to the name you want</p>
             <input type="text" name="network__workgroup" value="{{ network__workgroup }}" size="15" maxlength="40"/>
