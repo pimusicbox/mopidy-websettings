@@ -87,7 +87,7 @@
 
             <label for="musicbox__root_password">Root password</label>
             <p>To secure your device, you can change the default password of root, the superuser.</p>
-            <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15" maxlength="40"/>
+            <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15"/>
 
             <label for="musicbox__enable_shairport">AirPlay Streaming</label>
             <p>Enable streaming audio from iPhone, iPad, Mac, iPod using ShairPort (AirPlay) to MusicBox.</p>
@@ -202,7 +202,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <input type="text" name="network__mount_user" value="{{ network__mount_user }}" size="15" maxlength="50"/>
 
             <label for="network__mount_password">Password</label>
-            <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15" maxlength="50"/>
+            <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15"/>
 
             <label for="musicbox__resize_once">Resize filesystem</label>
             <p>Enable this to let MusicBox automatically resize the filesystem of your SD Card, so the system uses all the space of your card. Recommended because otherwise the card might fill up. This is beta, you can lose data on your card if you enable this!! (If so, you can put the original MusicBox image on it again and start over) </p>
@@ -234,7 +234,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="spotify__username">Username</label>
             <input type="text" name="spotify__username" value="{{ spotify__username }}" size="15" maxlength="40"/>
             <label for="spotify__password">Password</label>
-            <input type="password" name="spotify__password" value="{{ spotify__password }}" size="10" maxlength="40"/>
+            <input type="password" name="spotify__password" value="{{ spotify__password }}" size="10"/>
             <label for="spotify__bitrate">Music Quality (bitrate)</label>
         <select name="spotify__bitrate">
             <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif
@@ -260,7 +260,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="audioaddict__username">Username</label>
             <input type="text" name="audioaddict__username" value="{{ audioaddict__username }}" size="15" maxlength="40"/>
             <label for="audioaddict__password">Password</label>
-            <input type="password" name="audioaddict__password" value="{{ audioaddict__password }}" size="10" maxlength="40"/>
+            <input type="password" name="audioaddict__password" value="{{ audioaddict__password }}" size="10"/>
             <label for="audioaddict__bitrate">Music Quality (bitrate)</label>
         <select name="audioaddict__quality">
             <option value="40k"{% if audioaddict__quality == "40k" %} selected="true"{% endif
@@ -379,7 +379,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <input type="text" name="gmusic__username" value="{{ gmusic__username }}" size="15" maxlength="40"/>
             <label for="gmusic__password">Password</label>
             <p>If you use 2-way authentication, you need an application-specific password.</p>
-            <input type="password" name="gmusic__password" value="{{ gmusic__password }}" size="10" maxlength="40"/>
+            <input type="password" name="gmusic__password" value="{{ gmusic__password }}" size="10"/>
             <label for="gmusic__deviceid">Device ID</label>
             <p>The device ID is a 16-digit hexadecimal string (without a '0x' prefix) identifying the Android device registered for Google Play Music. You can obtain this ID by dialing *#*#8255#*#* on your phone (see the aid) or using an app like Android Device ID (see the Google Service Framework ID Key). You may also leave this field empty. MusicBox will try to find the ID by itself. See the Mopidy logs for more information. More info at <a href="https://github.com/hechtus/mopidy-gmusic">https://github.com/hechtus/mopidy-gmusic</a></p>
             <input type="text" name="gmusic__deviceid" value="{{ gmusic__deviceid }}" size="10" maxlength="40"/>
@@ -399,7 +399,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="scrobbler__username">Username</label>
             <input type="text" name="scrobbler__username" value="{{ scrobbler__username }}" size="15" maxlength="40"/>
             <label for="spotify__password">Password</label>
-            <input type="password" name="scrobbler__password" value="{{ scrobbler__password }}" size="10" maxlength="40"/>
+            <input type="password" name="scrobbler__password" value="{{ scrobbler__password }}" size="10"/>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
@@ -526,7 +526,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="subsonic__username">Username</label>
             <input type="text" name="subsonic__username" value="{{ subsonic__username }}" size="15" maxlength="40"/>
             <label for="subsonic__api_key">Password</label>
-            <input type="password" name="subsonic__password" value="{{ subsonic__password }}" size="15" maxlength="40"/>
+            <input type="password" name="subsonic__password" value="{{ subsonic__password }}" size="15"/>
             <label for="subsonic__ssl">Enable SSL</label>
             <div>
                 <select name="subsonic__ssl" data-role="slider"><br/>
