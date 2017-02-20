@@ -21,7 +21,7 @@
 
     <meta name="description" content="MusicBox">
     <meta name="author" content="Wouter van Wijk">
-    <meta name="copyright" content="(c) 2012-2014 Wouter van Wijk"/>
+    <meta name="copyright" content="(c) 2012-2017 Wouter van Wijk"/>
     <style>
         .ui-slider-input {
             display: block !important;
@@ -64,10 +64,8 @@
             <p>For security reasons, change the root password if you enable this.</p>
             <div>
                 <select name="network__enable_ssh" data-role="slider"><br/>
-                    <option value="false"{% if network__enable_ssh == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if network__enable_ssh == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if network__enable_ssh == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if network__enable_ssh == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -89,14 +87,25 @@
             <p>To secure your device, you can change the default password of root, the superuser.</p>
             <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15"/>
 
+            <label for="musicbox__webclient">Default webclient</label>
+            <p>Set the default webclient.</p>
+            <div>
+                <select name="musicbox__webclient" data-native-menu="true">
+                    <option value=""{% if musicbox__webclient == "musicbox_webclient" or musicbox__webclient == "" %} selected="true"{% endif %}>Musicbox</option>
+                    <option value=""{% if musicbox__webclient == "kuechenradio" %} selected="true"{% endif %}>Kuechenradio</option>
+                    <option value=""{% if musicbox__webclient == "mobile" %} selected="true"{% endif %}>Mobile</option>
+                    <option value=""{% if musicbox__webclient == "moped" %} selected="true"{% endif %}>Moped</option>
+                    <option value=""{% if musicbox__webclient == "mopify" %} selected="true"{% endif %}>Mopify</option>
+                    <option value=""{% if musicbox__webclient == "simple-webclient" %} selected="true"{% endif %}>Simple</option>
+                </select>
+            </div>
+            
             <label for="musicbox__enable_shairport">AirPlay Streaming</label>
             <p>Enable streaming audio from iPhone, iPad, Mac, iPod using ShairPort (AirPlay) to MusicBox.</p>
             <div>
                 <select name="musicbox__enable_shairport" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__enable_shairport == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if musicbox__enable_shairport == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if musicbox__enable_shairport == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__enable_shairport == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -104,10 +113,8 @@
             <p>Enable streaming music to MusicBox using DLNA/uPnP/OpenHome.</p>
             <div>
                 <select name="musicbox__enable_upnp" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__enable_upnp == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if musicbox__enable_upnp == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -130,36 +137,23 @@
  if hdmi is connected at boot, and otherwise to the analog output.
 Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it here to be able to use it.</p>
         <select name="musicbox__output" data-native-menu="true">
-            <option value=""{% if musicbox__output == "" %} selected="true"{% endif
-  %}>Automatic</option>
-            <option value="usb"{% if musicbox__output == "usb" %} selected="true"{% endif
-  %}>USB</option>
-            <option value="hdmi"{% if musicbox__output == "hdmi" %} selected="true"{% endif
-  %}>HDMI</option>
-            <option value="hifiberry_dac"{% if musicbox__output == "hifiberry_dac" %} selected="true"{% endif
-  %}>HifiBerry DAC</option>
-            <option value="hifiberry_digi"{% if musicbox__output == "hifiberry_digi" %} selected="true"{% endif
-  %}>HifiBerry Digi</option>
-            <option value="hifiberry_dacplus"{% if musicbox__output == "hifiberry_dacplus" %} selected="true"{% endif
-  %}>HifiBerry DAC+</option>
-            <option value="iqaudio_dac"{% if musicbox__output == "iqaudio_dac" %} selected="true"{% endif
-  %}>IQ Audio DAC</option>
-<!--            <option value="iqaudio_dacplus"{% if musicbox__output == "iqaudio_dacplus" %} selected="true"{% endif
-  %}>IQ Audio DAC+</option>
-            <option value="wolfson"{% if musicbox__output == "wolfson" %} selected="true"{% endif
-  %}>Wolfson</option> -->
-            <option value="analog"{% if musicbox__output == "analog" %} selected="true"{% endif
-  %}>Analog</option>
+            <option value=""{% if musicbox__output == "" %} selected="true"{% endif %}>Automatic</option>
+            <option value="usb"{% if musicbox__output == "usb" %} selected="true"{% endif %}>USB</option>
+            <option value="hdmi"{% if musicbox__output == "hdmi" %} selected="true"{% endif %}>HDMI</option>
+            <option value="hifiberry_dac"{% if musicbox__output == "hifiberry_dac" %} selected="true"{% endif %}>HifiBerry DAC</option>
+            <option value="hifiberry_digi"{% if musicbox__output == "hifiberry_digi" %} selected="true"{% endif %}>HifiBerry Digi</option>
+            <option value="hifiberry_dacplus"{% if musicbox__output == "hifiberry_dacplus" %} selected="true"{% endif %}>HifiBerry DAC+</option>
+            <option value="hifiberry_amp"{% if musicbox__output == "hifiberry_amp" %} selected="true"{% endif %}>HifiBerry AMP</option>
+            <option value="iqaudio_dac"{% if musicbox__output == "iqaudio_dac" %} selected="true"{% endif %}>IQ Audio DAC</option>
+            <option value="analog"{% if musicbox__output == "analog" %} selected="true"{% endif %}>Analog</option>
         </select>
 
             <label for="musicbox__downsample_usb">Downsample USB</label>
             <p>Because of limitations with some USB-DACs, MusicBox downsamples USB sound to 44k by default. You can disable this here.</p>
             <div>
                 <select name="musicbox__downsample_usb" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__downsample_usb == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if musicbox__downsample_usb == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if musicbox__downsample_usb == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__downsample_usb == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -167,10 +161,8 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
             <p>For some USB audiocards (DACs), you can enable hardware mixing of the volume.</p>
             <div>
                 <select name="audio__mixer" data-role="slider"><br/>
-                    <option value="software"{% if audio__mixer == "software" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="autoaudiomixer"{% if audio__mixer == "autoaudiomixer" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="software"{% if audio__mixer == "software" %} selected="true"{% endif %}>Off</option>
+                    <option value="alsamixer"{% if audio__mixer == "alsamixer" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -186,10 +178,8 @@ Addon cards from HifiBerry, IQ Audio cannot be detected automatically. Set it he
             <p>Use this setting to let Mopidy/MusicBox scan on startup for new music files on the SD Card, USB or the Network. This could take a while! This can slowdown the boot a lot. Disable it again if your music doesn't change.</p>
             <div>
                 <select name="musicbox__scan_always" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__scan_always == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if musicbox__scan_always == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if musicbox__scan_always == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__scan_always == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -208,10 +198,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Enable this to let MusicBox automatically resize the filesystem of your SD Card, so the system uses all the space of your card. Recommended because otherwise the card might fill up. This is beta, you can lose data on your card if you enable this!! (If so, you can put the original MusicBox image on it again and start over) </p>
             <div>
                 <select name="musicbox__resize_once" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__resize_once == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if musicbox__resize_once == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if musicbox__resize_once == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__resize_once == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -225,10 +213,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Enable playing music from Spotify.</p>
             <div>
                 <select name="spotify__enabled" data-role="slider"><br/>
-                    <option value="false"{% if spotify__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if spotify__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if spotify__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if spotify__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="spotify__username">Username</label>
@@ -237,12 +223,9 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <input type="password" name="spotify__password" value="{{ spotify__password }}" size="10"/>
             <label for="spotify__bitrate">Music Quality (bitrate)</label>
         <select name="spotify__bitrate">
-            <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif
-  %}>Lowest, low network usage (96kbps)</option>
-            <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif
-  %}>Medium, medium network usage (160kbps)</option>
-            <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif
-  %}>High, higher network usage (320kbps)</option>
+            <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif %}>Lowest, low network usage (96kbps)</option>
+            <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif %}>Medium, medium network usage (160kbps)</option>
+            <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif %}>High, higher network usage (320kbps)</option>
         </select>
         </div>
 
@@ -251,10 +234,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Enable playing music from the AudioAddict network of sites, including Digitally Imported, RadioTunes, RockRadio, JazzRadio and FrescaRadio.</p>
             <div>
                 <select name="audioaddict__enabled" data-role="slider"><br/>
-                    <option value="false"{% if audioaddict__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if audioaddict__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if audioaddict__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if audioaddict__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="audioaddict__username">Username</label>
@@ -263,105 +244,61 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <input type="password" name="audioaddict__password" value="{{ audioaddict__password }}" size="10"/>
             <label for="audioaddict__bitrate">Music Quality (bitrate)</label>
         <select name="audioaddict__quality">
-            <option value="40k"{% if audioaddict__quality == "40k" %} selected="true"{% endif
-  %}>Lowest, low network usage (40kbps)</option>
-            <option value="64k"{% if audioaddict__quality == "64k" %} selected="true"{% endif
-  %}>Medium, medium network usage (64kbps)</option>
-            <option value="128k"{% if audioaddict__quality == "128k" %} selected="true"{% endif
-  %}>Great, higher network usage (128kbps)</option>
-            <option value="320k"{% if audioaddict__quality == "320k" %} selected="true"{% endif
-  %}>Excellent, higher network usage (320kbps)</option>
+            <option value="40k"{% if audioaddict__quality == "40k" %} selected="true"{% endif %}>Lowest, low network usage (40kbps)</option>
+            <option value="64k"{% if audioaddict__quality == "64k" %} selected="true"{% endif %}>Medium, medium network usage (64kbps)</option>
+            <option value="128k"{% if audioaddict__quality == "128k" %} selected="true"{% endif %}>Great, higher network usage (128kbps)</option>
+            <option value="320k"{% if audioaddict__quality == "320k" %} selected="true"{% endif %}>Excellent, higher network usage (320kbps)</option>
         </select>
         <div>
           <label for="audioaddict__difm">Enable DI.FM?</label>
           <select name="audioaddict__difm" data-role="slider"><br/>
-            <option value="false"{% if audioaddict__difm == "false" %} selected="true"{% endif
-  %}>Off</option>
-            <option value="true"{% if audioaddict__difm == "true" %} selected="true"{% endif
-  %}>On</option>
+            <option value="false"{% if audioaddict__difm == "false" %} selected="true"{% endif %}>Off</option>
+            <option value="true"{% if audioaddict__difm == "true" %} selected="true"{% endif %}>On</option>
           </select>
         </div>
         <div>
           <label for="audioaddict__radiotunes">Enable RadioTunes?</label>
           <select name="audioaddict__radiotunes" data-role="slider"><br/>
-            <option value="false"{% if audioaddict__radiotunes == "false" %} selected="true"{% endif
-  %}>Off</option>
-            <option value="true"{% if audioaddict__radiotunes == "true" %} selected="true"{% endif
-  %}>On</option>
+            <option value="false"{% if audioaddict__radiotunes == "false" %} selected="true"{% endif %}>Off</option>
+            <option value="true"{% if audioaddict__radiotunes == "true" %} selected="true"{% endif %}>On</option>
           </select>
         </div>
         <div>
           <label for="audioaddict__rockradio">Enable RockRadio?</label>
           <select name="audioaddict__rockradio" data-role="slider"><br/>
-            <option value="false"{% if audioaddict__rockradio == "false" %} selected="true"{% endif
-  %}>Off</option>
-            <option value="true"{% if audioaddict__rockradio == "true" %} selected="true"{% endif
-  %}>On</option>
+            <option value="false"{% if audioaddict__rockradio == "false" %} selected="true"{% endif %}>Off</option>
+            <option value="true"{% if audioaddict__rockradio == "true" %} selected="true"{% endif %}>On</option>
           </select>
         </div>
         <div>
           <label for="audioaddict__jazzradio">Enable JazzRadio?</label>
           <select name="audioaddict__jazzradio" data-role="slider"><br/>
-            <option value="false"{% if audioaddict__jazzradio == "false" %} selected="true"{% endif
-  %}>Off</option>
-            <option value="true"{% if audioaddict__jazzradio == "true" %} selected="true"{% endif
-  %}>On</option>
+            <option value="false"{% if audioaddict__jazzradio == "false" %} selected="true"{% endif %}>Off</option>
+            <option value="true"{% if audioaddict__jazzradio == "true" %} selected="true"{% endif %}>On</option>
           </select>
         </div>
         <div>
           <label for="audioaddict__frescaradio">Enable FrescaRadio?</label>
           <select name="audioaddict__frescaradio" data-role="slider"><br/>
-            <option value="false"{% if audioaddict__frescaradio == "false" %} selected="true"{% endif
-  %}>Off</option>
-            <option value="true"{% if audioaddict__frescaradio == "true" %} selected="true"{% endif
-  %}>On</option>
+            <option value="false"{% if audioaddict__frescaradio == "false" %} selected="true"{% endif %}>Off</option>
+            <option value="true"{% if audioaddict__frescaradio == "true" %} selected="true"{% endif %}>On</option>
           </select>
         </div>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
-            <script src="//connect.soundcloud.com/sdk.js"></script>
-              <script>
-                SC.initialize({
-                  client_id: "93e33e327fd8a9b77becd179652272e2",
-                  redirect_uri: "http://www.mopidy.com/soundcloud_callback",
-                });
-                function auth_soundcloud () {
-                  SC.connect(function() {
-                    SC.get("/me", function(user, error) {
-                      if (error) {
-                        alert("Error: " + error.message);
-                      } else {
-                        alert(SC.accessToken());
-                        $("#sc_token").val(SC.accessToken());
-                      }
-                    });
-                  });
-                }
-              </script>
-
             <h2>SoundCloud</h2>
-            <p>(Beta) If you want to use SoundCloud, you must first authenticate
-      your installation to access your SoundCloud account. <!-- Click here to do that: <a href="#soundcloud" class="img"
-            onclick="javascript:auth_soundcloud()"><img src="http://connect.soundcloud.com/2/btn-connect-sc-l.png"
-              alt="Connect with SoundCloud"></a>. Or --> To do that, go to <a href="http://www.mopidy.com/authenticate" target="_blank">http://www.mopidy.com/authenticate</a></p>
+            <p>If you want to use SoundCloud, you must first authenticate your installation to access your SoundCloud account.
+               To do that, go to <a href="https://www.mopidy.com/authenticate" target="_blank">http://www.mopidy.com/authenticate</a></p>
             <div>
                 <select name="soundcloud__enabled" data-role="slider"><br/>
-                    <option value="false"{% if soundcloud__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if soundcloud__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if soundcloud__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if soundcloud__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="soundcloud__auth_token">Token</label>
             <p>Fill the token here e.g. 1-1111-1111111</p>
             <input type="text" name="soundcloud__auth_token" id="sc_token" value="{{ soundcloud__auth_token }}" size="15" maxlength="40"/>
-<!-- does not work yet            <label for="soundcloud__explore">Explore</label>
-            <p>The explore option lets you define playlists to explore in SoundCloud. For example, if you want Jazz from <a href="https://soundcloud.com/explore/jazz" target="_blank">https://soundcloud.com/explore/jazz</a> your entry would be 'jazz'. More info at <a href="https://github.com/dz0ny/mopidy-soundcloud" target="_blank">https://github.com/dz0ny/mopidy-soundcloud</a>. Seperate with commas. E.g. explore = jazz, electronic/Ambient, pop/New Wave, rock/Indie</p>
-            <div data-role="fieldcontain">
-                <textarea rows="8" cols="40" name="soundcloud__explore">{{ soundcloud__explore }}</textarea>
-            </div>
--->
         </div>
 
         <div data-role="collapsible" class="settingscoll">
@@ -369,10 +306,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>(Beta) Please provide your username, password to enable Google Music. You have to supply a device-id too.</p>
             <div>
                 <select name="gmusic__enabled" data-role="slider"><br/>
-                    <option value="false"{% if gmusic__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if gmusic__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if gmusic__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if gmusic__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="gmusic__username">Username</label>
@@ -390,10 +325,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Please provide your username, password to enable scrobbling music to Last.FM.</p>
             <div>
                 <select name="scrobbler__enabled" data-role="slider"><br/>
-                    <option value="false"{% if scrobbler__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if scrobbler__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if scrobbler__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if scrobbler__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="scrobbler__username">Username</label>
@@ -407,10 +340,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Play sound from YouTube videos (use search to find them)</p>
             <div>
                 <select name="youtube__enabled" data-role="slider"><br/>
-                    <option value="false"{% if youtube__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if (youtube__enabled == "true") or (youtube__enabled is undefined) %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if youtube__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if (youtube__enabled == "true") %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -420,10 +351,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Play Podcasts from iTunes and Gpodder.net.</p>
             <div>
                 <select name="podcast__enabled" data-role="slider"><br/>
-                    <option value="false"{% if podcast__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if (podcast__enabled == "true") or (podcast__enabled is undefined) %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if podcast__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if (podcast__enabled == "true") %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 <!-- does work yet            <label for="podcast__feed_urls">Feed urls</label>
@@ -439,10 +368,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Select radiostations from TuneIn directory.</p>
             <div>
                 <select name="tunein__enabled" data-role="slider"><br/>
-                    <option value="false"{% if tunein__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if (tunein__enabled == "true") or (tunein__enabled is undefined) %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if tunein__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if (tunein__enabled == "true") %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -452,10 +379,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Enable Dirble webradio directory.</p>
             <div>
                 <select name="dirble__enabled" data-role="slider"><br/>
-                    <option value="false"{% if dirble__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if dirble__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if dirble__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if dirble__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
 
@@ -474,10 +399,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Play radiostations from Soma FM.</p>
             <div>
                 <select name="somafm__enabled" data-role="slider"><br/>
-                    <option value="false"{% if somafm__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if (somafm__enabled == "true") or (somafm__enabled is undefined) %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if somafm__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if (somafm__enabled == "true") %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -487,10 +410,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Play audio files from this device or the network</p>
             <div>
                 <select name="local__enabled" data-role="slider"><br/>
-                    <option value="false"{% if local__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if (local__enabled == "true") or (local__enabled is undefined) %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if local__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if (local__enabled == "true") %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -500,10 +421,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Play (old) sounds, music and speech from The Internet Archive</p>
             <div>
                 <select name="internetarchive__enabled" data-role="slider"><br/>
-                    <option value="false"{% if internetarchive__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if internetarchive__enabled == "true" or not internetarchive__enabled %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if internetarchive__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if internetarchive__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>
@@ -513,10 +432,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <p>Enable subsonic musicstreamer support.</p>
             <div>
                 <select name="subsonic__enabled" data-role="slider"><br/>
-                    <option value="false"{% if subsonic__enabled == "false" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="true"{% if subsonic__enabled == "true" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="false"{% if subsonic__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if subsonic__enabled == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
             <label for="subsonic__hostname">Host url (e.g. music.myserver.org )</label>
@@ -530,10 +447,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="subsonic__ssl">Enable SSL</label>
             <div>
                 <select name="subsonic__ssl" data-role="slider"><br/>
-                    <option value="no"{% if subsonic__ssl == "no" %} selected="true"{% endif
-  %}>Off</option>
-                    <option value="yes"{% if subsonic__ssl == "yes" %} selected="true"{% endif
-  %}>On</option>
+                    <option value="no"{% if subsonic__ssl == "no" %} selected="true"{% endif %}>Off</option>
+                    <option value="yes"{% if subsonic__ssl == "yes" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
         </div>

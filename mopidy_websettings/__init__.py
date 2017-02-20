@@ -46,7 +46,7 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['musicbox'] = config.String()
+        schema['musicbox'] = config.Boolean()
         schema['config_file'] = config.String()
         return schema
 
@@ -60,7 +60,7 @@ class Extension(ext.Extension):
 class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self, core, config):
-        self.config_file = config.get('websettings')['config_file']
+        self.config_file = config['websettings']['config_file']
         self.core = core
 
     def get(self):
@@ -126,6 +126,10 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                         except:
                             iniconfig[item] = {}
                             iniconfig[item][subitem] = argumentItem
+            if iniconfig['audio']['mixer'] == 'alsamixer':
+                iniconfig['alsamixer']['enabled'] = 'true'
+            else:
+                iniconfig['alsamixer']['enabled'] = 'false'
             iniconfig.write()
             error = 'Settings Saved!'
         message = '<html><body><h1>' + error + '</h1><p>Applying changes (reboot) <br/><a href="/">Back</a><br/></p></body></html>'
