@@ -334,6 +334,12 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="gmusic__deviceid">Device ID</label>
             <p>The device ID is a 16-digit hexadecimal string (without a '0x' prefix) identifying the Android device registered for Google Play Music. You can obtain this ID by dialing *#*#8255#*#* on your phone (see the aid) or using an app like Android Device ID (see the Google Service Framework ID Key). You may also leave this field empty. MusicBox will try to find the ID by itself. See the Mopidy logs for more information. More info at <a href="https://github.com/hechtus/mopidy-gmusic">https://github.com/hechtus/mopidy-gmusic</a></p>
             <input type="text" name="gmusic__deviceid" value="{{ gmusic__deviceid }}" size="10" maxlength="40"/>
+            <label for="gmusic__all_access">'All Access'</label>
+            <p>By default, 'All Access' will be enabled automatically if you subscribe but you may also force enable or disable it.</p>
+            <select name="gmusic__all_access" data-role="slider"><br/>
+                <option value="false"{% if gmusic__all_access == "false" %} selected="true"{% endif %}>Off</option>
+                <option value="true"{% if gmusic__all_access == "true" %} selected="true"{% endif %}>On</option>
+            </select>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
