@@ -22,6 +22,7 @@ template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 #log_file = '/var/log/mopidy/mopidy.log'
 
 password_mask = '*'
+reboot_required = ['network', 'musicbox']
 
 def restart_program():
     """
@@ -59,9 +60,8 @@ class Extension(ext.Extension):
 
 class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core, config):
+    def initialize(self, config):
         self.config_file = config['websettings']['config_file']
-        self.core = core
 
     def get(self):
         templateLoader = jinja2.FileSystemLoader( searchpath = "/" )
@@ -95,11 +95,12 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
 class WebPostRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core, config):
+    def initialize(self, config):
         self.config_file = config.get('websettings')['config_file']
-        self.core = core
 
     def post(self):
+        apply_html = ''
+        apply_string = 'restart Mopidy'
         error = ''
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
@@ -122,6 +123,9 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                               continue
                         #create section entry if it doesn't exist
                         try:
+                            # Check if changing this setting requires a system reboot.
+                            if iniconfig[item][subitem] != argumentItem and item in reboot_required:
+                                apply_string = 'reboot system'
                             iniconfig[item][subitem] = argumentItem
                         except:
                             iniconfig[item] = {}
@@ -130,24 +134,36 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                 iniconfig['alsamixer']['enabled'] = 'true'
             else:
                 iniconfig['alsamixer']['enabled'] = 'false'
+
             iniconfig.write()
             error = 'Settings Saved!'
-        message = '<html><body><h1>' + error + '</h1><p>Applying changes (reboot) <br/><a href="/">Back</a><br/></p></body></html>'
+            apply_html = '<form action="apply" method="post"><input type="submit" name="method" value="Apply changes now (' + apply_string + ')" />'
+
+        message = '<html><body><h1>' + error + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
         self.write(message)
 
-        #logger.info ("restart")
-        #restart_program()
+class WebApplyRequestHandler(tornado.web.RequestHandler):
 
-        #using two different methods for reboot for different systems
-        logger.info('Rebooting system')
-        os.system("sudo shutdown -r now")
-        os.system("shutdown -r now")
-        #        os.system("/opt/musicbox/startup.sh")
+    def initialize(self): pass
+
+    def post(self):
+        method = self.get_argument('method', None)
+        if method != None:
+            if 'reboot' in method:
+                status='Rebooting Musicbox system...'
+                os.system("sudo shutdown -r now")
+            elif 'restart' in method:
+                status='Restarting Mopidy service...'
+                os.system("sudo /etc/init.d/mopidy restart")
+            else:
+                status='Error while applying ' + method
+        logger.info(status)
+        message = '<html><body><h1>' + status + '</h1><br/><br/><a href="/">Home</a><br/></p></body></html>'
+        self.write(message)
 
 class WebRebootRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core):
-        self.core = core
+    def initialize(self): pass
 
     def post(self):
         logger.info('Halting system')
@@ -156,8 +172,7 @@ class WebRebootRequestHandler(tornado.web.RequestHandler):
 
 class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
-    def initialize(self, core):
-        self.core = core
+    def initialize(self): pass
 
     def post(self):
         logger.info('Halting system')
@@ -167,8 +182,9 @@ class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
 def websettings_app_factory(config, core):
     return [
-        ('/', WebSettingsRequestHandler, {'core': core, 'config': config}),
-        ('/update', WebPostRequestHandler, {'core': core, 'config': config}),
-        ('/reboot', WebRebootRequestHandler, {'core': core}),
-        ('/shutdown', WebShutdownRequestHandler, {'core': core})
+        ('/',        WebSettingsRequestHandler, {'config': config}),
+        ('/save',    WebPostRequestHandler,     {'config': config}),
+        ('/apply',   WebApplyRequestHandler,                      ),
+        ('/reboot',  WebRebootRequestHandler,                     ),
+        ('/shutdown', WebShutdownRequestHandler,                  )
     ]
