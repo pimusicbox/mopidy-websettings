@@ -209,7 +209,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
     <h3>Services</h3>
         <div data-role="collapsible" class="settingscoll">
-            <h2>Spotify</h2>
+            <h2>Spotify / Spotify-Web</h2>
             <p>Enable playing music from Spotify.</p>
             <div>
                 <select name="spotify__enabled" data-role="slider"><br/>
@@ -222,11 +222,26 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="spotify__password">Password</label>
             <input type="password" name="spotify__password" value="{{ spotify__password }}" size="10"/>
             <label for="spotify__bitrate">Music Quality (bitrate)</label>
-        <select name="spotify__bitrate">
-            <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif %}>Lowest, low network usage (96kbps)</option>
-            <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif %}>Medium, medium network usage (160kbps)</option>
-            <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif %}>High, higher network usage (320kbps)</option>
-        </select>
+            <select name="spotify__bitrate">
+                <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif %}>Lowest, low network usage (96kbps)</option>
+                <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif %}>Medium, medium network usage (160kbps)</option>
+                <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif %}>High, higher network usage (320kbps)</option>
+            </select>
+
+            <label for="spotify_web__enabled">Spotify-Web</label>
+            <p>Enable extended Spotify browsing. This requires additional credentials obtained from 
+                <a href="https://www.mopidy.com/authenticate#spotify" target="_blank">https://www.mopidy.com/authenticate</a>
+            </p>
+            <select name="spotify_web__enabled" data-role="slider"><br/>
+                <option value="false"{% if spotify_web__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                <option value="true"{% if spotify_web__enabled == "true" %} selected="true"{% endif %}>On</option>
+            </select>
+            <label for="spotify_web__client_id">Client ID</label>
+            <p>Fill the id here e.g. 1b3c56f8-2a4e-1b3d-a9b2-1d3e56f89c</p>
+            <input type="text" name="spotify_web__client_id" value="{{ spotify_web__client_id }}" size="30" maxlength="50"/>
+            <label for="spotify_web__client_secret">Client Secret</label>
+            <p>Fill the secret token here e.g. aBcdEFGhj-jk12z3548d8sma-LKdDYvbR674GDGDa=</p>
+            <input type="text" name="spotify_web__client_secret" value="{{ spotify_web__client_secret }}" size="40" maxlength="60"/>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
@@ -288,8 +303,9 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>SoundCloud</h2>
-            <p>If you want to use SoundCloud, you must first authenticate your installation to access your SoundCloud account.
-               To do that, go to <a href="https://www.mopidy.com/authenticate" target="_blank">http://www.mopidy.com/authenticate</a></p>
+            <p>SoundCloud requires credentials obtained from 
+                <a href="https://www.mopidy.com/authenticate" target="_blank">https://www.mopidy.com/authenticate</a>
+            </p>
             <div>
                 <select name="soundcloud__enabled" data-role="slider"><br/>
                     <option value="false"{% if soundcloud__enabled == "false" %} selected="true"{% endif %}>Off</option>
