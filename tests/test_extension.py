@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import unittest
 
-from mopidy_settings import Extension, frontend as frontend_lib
+from mopidy_websettings import Extension
 
 
 class ExtensionTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class ExtensionTest(unittest.TestCase):
 
         config = ext.get_default_config()
 
-        self.assertIn('[settings]', config)
+        self.assertIn('[websettings]', config)
         self.assertIn('enabled = true', config)
 
     def test_get_config_schema(self):
@@ -20,8 +20,7 @@ class ExtensionTest(unittest.TestCase):
 
         schema = ext.get_config_schema()
 
-        # TODO Test the content of your config schema
-        #self.assertIn('username', schema)
-        #self.assertIn('password', schema)
+        self.assertIn('musicbox', schema)
+        self.assertIn('config_file', schema)
 
     # TODO Write more tests
