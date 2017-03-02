@@ -10,12 +10,12 @@ Mopidy-WebSettings
     :target: https://pypi.python.org/pypi/Mopidy-WebSettings/
     :alt: Number of PyPI downloads
 
-.. image:: https://img.shields.io/travis/woutervanwijk/mopidy-websettings/master.png?style=flat
-    :target: https://travis-ci.org/woutervanwijk/mopidy-websettings
+.. image:: https://img.shields.io/travis/pimusicbox/mopidy-websettings/develop.svg?style=flat
+    :target: https://travis-ci.org/pimusicbox/mopidy-websettings
     :alt: Travis CI build status
 
-.. image:: https://img.shields.io/coveralls/woutervanwijk/mopidy-websettings/master.svg?style=flat
-   :target: https://coveralls.io/r/woutervanwijk/mopidy-websettings?branch=master
+.. image:: https://img.shields.io/coveralls/pimusicbox/mopidy-websettings/develop.svg?style=flat
+   :target: https://coveralls.io/r/pimusicbox/mopidy-websettings?branch=develop
    :alt: Test coverage
 
 Mopidy extension for editing settings in a webinterface. Used by Pi MusicBox, but also usable for personal installations or other projects, since MusicBox-only settings are hidden automatically.
@@ -50,13 +50,20 @@ For now, the settings are only applied after a reboot, which this extension will
 Project resources
 =================
 
-- `Source code <https://github.com/woutervanwijk/mopidy-websettings>`_
-- `Issue tracker <https://github.com/woutervanwijk/mopidy-websettings/issues>`_
-- `Development branch tarball <https://github.com/woutervanwijk/mopidy-websettings/archive/master.tar.gz#egg=Mopidy-WebSettings-dev>`_
+- `Source code <https://github.com/pimusicbox/mopidy-websettings>`_
+- `Issue tracker <https://github.com/pimusicbox/mopidy-websettings/issues>`_
+- `Development branch tarball <https://github.com/pimusicbox/mopidy-websettings/archive/develop.tar.gz#egg=Mopidy-WebSettings-dev>`_
 
 
 Changelog
 =========
+
+v0.1.5 (2/3/2016)
+--------------------
+
+- Fixed password field length restrictions.
+- Apply changes with Mopidy service restart rather than system reboot where possible.
+- Added/updated options as required for integration with PiMusicbox v0.7.
 
 v0.1.4.2 (26/3/2015)
 --------------------
