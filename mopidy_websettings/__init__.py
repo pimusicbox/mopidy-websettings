@@ -22,7 +22,6 @@ template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 #log_file = '/var/log/mopidy/mopidy.log'
 
 password_mask = '*'
-reboot_required = ['network', 'musicbox']
 
 def restart_program():
     """
@@ -98,6 +97,15 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
     def initialize(self, config):
         self.config_file = config.get('websettings')['config_file']
 
+    def needs_reboot(self, item, subItem):
+        reboot_sections = ['network', 'musicbox']
+        restart_subsections = ['webclient']
+        if item in reboot_sections:
+            # Restarting Mopidy is sufficient for some subsections.
+            if subItem not in restart_subsections:
+                return True
+        return False
+
     def post(self):
         apply_html = ''
         apply_string = 'restart Mopidy'
@@ -125,7 +133,7 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                         # Create default entry if it doesn't already exist
                         oldItem = iniconfig.setdefault(item, {}).setdefault(subitem, '')
                         # Check if changing this setting requires a system reboot.
-                        if oldItem != argumentItem and item in reboot_required:
+                        if oldItem != argumentItem and self.needs_reboot(item, subitem):
                             apply_string = 'reboot system'
                         iniconfig[item][subitem] = argumentItem
             if iniconfig['audio']['mixer'] == 'alsamixer':
