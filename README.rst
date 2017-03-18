@@ -58,6 +58,17 @@ Project resources
 Changelog
 =========
 
+v0.1.6 (18/3/2016)
+--------------------
+
+- Updated and improved explanations for settings.
+- Removed development-orientated resize_once option.
+- Fixed corrupt settings when expected subsections missing from settings.ini.
+- Fixed webclient not changing.
+- Changing the webclient requires a Mopidy restart rather than a reboot.
+- Fixed outdated Exception syntax.
+- Option to populate autoplay with currently playing track. 
+
 v0.1.5 (2/3/2016)
 --------------------
 
