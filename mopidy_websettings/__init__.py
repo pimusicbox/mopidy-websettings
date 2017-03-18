@@ -66,25 +66,26 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         templateEnv = jinja2.Environment( loader=templateLoader )
         template = templateEnv.get_template(template_file)
         error = ''
-        #read config file
+
+        # Read config file
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
-        except (ConfigObjError, IOError), e:
-            error = 'Could not load ini file! %s %s %s' % (e, ConfigObjError, IOError)
-        #read values of valid items (in the spec-file)
+        except (ConfigObjError, IOError) as e:
+            error = 'Could not load ini file! %s' % e
+            logger.error(error)
+
+        templateVars = { 'error': error }
+        # Read values of valid items (in the spec-file)
         validItems = ConfigObj(spec_file, encoding='utf8')
-        templateVars = {
-            "error": error
-        }
-        #iterate over the valid items to get them into the template
+        # Iterate over the valid items to get them into the template
         for item in validItems:
             for subitem in validItems[item]:
                 itemName = item + '__' + subitem
                 try:
                     configValue = iniconfig[item][subitem]
                     #compare last 8 caracters of subitemname
-                    if subitem[-8:] == 'password' and configValue != '':
-                        configValue = password_mask * len(iniconfig[item][subitem])
+                    if subitem.endswith('password') and configValue:
+                        configValue = password_mask * len(configValue)
                     templateVars[itemName] = configValue
                 except:
                     pass
@@ -142,8 +143,8 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
             iniconfig.write()
             status = 'Settings Saved!'
             apply_html = '<form action="apply" method="post"><input type="submit" name="method" value="Apply changes now (' + apply_string + ')" />'
-        except (ConfigObjError, IOError), e:
-            status = 'Could not load ini file!'
+        except (ConfigObjError, IOError) as e:
+            status = 'Could not load ini file! %s' % e
             logger.error(status)
 
         message = '<html><body><h1>' + status + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
