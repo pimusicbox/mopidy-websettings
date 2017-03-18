@@ -11,7 +11,7 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 import jinja2
 
-__version__ = '0.1.6'
+__version__ = '0.1.6.1'
 
 logger = logging.getLogger(__name__)
 
