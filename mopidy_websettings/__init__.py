@@ -17,11 +17,8 @@ logger = logging.getLogger(__name__)
 
 spec_file = os.path.join(os.path.dirname(__file__), 'settingsspec.ini')
 template_file = os.path.join(os.path.dirname(__file__), 'index.html')
-#config_file = '/etc/mopidy/mopidy.conf'
-
-#log_file = '/var/log/mopidy/mopidy.log'
-
 password_mask = '*'
+
 
 def restart_program():
     """
@@ -34,6 +31,7 @@ def restart_program():
     
     python = sys.executable
     os.execl(python, python, * sys.argv)
+
 
 class Extension(ext.Extension):
     dist_name = 'Mopidy-WebSettings'
@@ -56,6 +54,7 @@ class Extension(ext.Extension):
             'name': 'settings',
             'factory': websettings_app_factory,
         })
+
 
 class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
@@ -92,6 +91,7 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
         self.write(template.render ( templateVars ) )
 
+
 class WebPostRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self, config):
@@ -109,17 +109,11 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
     def post(self):
         apply_html = ''
         apply_string = 'restart Mopidy'
-        error = ''
+        status = ''
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
-        except (ConfigObjError, IOError), e:
-            error = 'Could not load ini file!'
-        if error == '':
             validItems = ConfigObj(spec_file, encoding='utf8')
-            templateVars = {
-                "error": error
-            }
-            #iterate over the items, so that only valid items are processed
+            # Iterate over the items, so that only valid items are processed
             for item in validItems:
                 for subitem in validItems[ item ]:
                     itemName = item + '__' + subitem
@@ -136,17 +130,25 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                         if oldItem != argumentItem and self.needs_reboot(item, subitem):
                             apply_string = 'reboot system'
                         iniconfig[item][subitem] = argumentItem
-            if iniconfig['audio']['mixer'] == 'alsamixer':
-                iniconfig['alsamixer']['enabled'] = 'true'
-            else:
-                iniconfig['alsamixer']['enabled'] = 'false'
+            # Ensure the alsamixer and audio/mixer settings are consistent.
+            try:
+                if iniconfig['audio']['mixer'] == 'alsamixer':
+                    iniconfig['alsamixer']['enabled'] = 'true'
+                else:
+                    iniconfig['alsamixer']['enabled'] = 'false'
+            except:
+                pass
 
             iniconfig.write()
-            error = 'Settings Saved!'
+            status = 'Settings Saved!'
             apply_html = '<form action="apply" method="post"><input type="submit" name="method" value="Apply changes now (' + apply_string + ')" />'
+        except (ConfigObjError, IOError), e:
+            status = 'Could not load ini file!'
+            logger.error(status)
 
-        message = '<html><body><h1>' + error + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
+        message = '<html><body><h1>' + status + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
         self.write(message)
+
 
 class WebApplyRequestHandler(tornado.web.RequestHandler):
 
@@ -167,6 +169,7 @@ class WebApplyRequestHandler(tornado.web.RequestHandler):
         message = '<html><body><h1>' + status + '</h1><br/><br/><a href="/">Home</a><br/></p></body></html>'
         self.write(message)
 
+
 class WebRebootRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self): pass
@@ -175,6 +178,7 @@ class WebRebootRequestHandler(tornado.web.RequestHandler):
         logger.info('Halting system')
         os.system("sudo shutdown -r now")
         os.system("shutdown -r now")
+
 
 class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
