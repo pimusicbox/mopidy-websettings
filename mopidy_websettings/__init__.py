@@ -115,21 +115,19 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
             for item in validItems:
                 for subitem in validItems[ item ]:
                     itemName = item + '__' + subitem
+
                     argumentItem = self.get_argument(itemName, default='')
                     if argumentItem:
                         #don't edit config value if password mask
                         if subitem[-8:] == 'password':
                           if argumentItem == (password_mask * len(argumentItem)) or argumentItem == '':
                               continue
-                        #create section entry if it doesn't exist
-                        try:
-                            # Check if changing this setting requires a system reboot.
-                            if iniconfig[item][subitem] != argumentItem and item in reboot_required:
-                                apply_string = 'reboot system'
-                            iniconfig[item][subitem] = argumentItem
-                        except:
-                            iniconfig[item] = {}
-                            iniconfig[item][subitem] = argumentItem
+                        # Create default entry if it doesn't already exist
+                        oldItem = iniconfig.setdefault(item, {}).setdefault(subitem, '')
+                        # Check if changing this setting requires a system reboot.
+                        if oldItem != argumentItem and item in reboot_required:
+                            apply_string = 'reboot system'
+                        iniconfig[item][subitem] = argumentItem
             if iniconfig['audio']['mixer'] == 'alsamixer':
                 iniconfig['alsamixer']['enabled'] = 'true'
             else:
