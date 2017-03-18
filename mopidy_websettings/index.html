@@ -81,7 +81,7 @@
             <input type="text" name="network__name" value="{{ network__name }}" size="12" maxlength="9"/>
 
             <label for="musicbox__autoplay">Autoplay URI</label>
-            <p>MusicBox can automatically start playing a stream or track at startup. The URI to use can be obtained from the <a href="/musicbox_webclient/index.html#stream">Streams</a> page or the track's popup menu.</p>
+            <p>MusicBox can automatically start playing a stream or track at startup. The URI to use can be obtained from the <a href="/musicbox_webclient/index.html#stream">Streams</a> page, the track's popup menu, or <a href="#" onclick="getCurrentTrackUri()">get currently playing</a>.</p>
             <input type="text" name="musicbox__autoplay" value="{{ musicbox__autoplay }}" size="15" maxlength="300"/>
 
             <label for="musicbox__autoplaymaxwait">Autoplay timeout</label>
@@ -463,5 +463,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
       </form>
       <br/><br/>
     </div>
+    <script type="text/javascript" src="js/mopidy.min.js"></script>
+    <script type="text/javascript" src="js/simple.js"></script>
   </body>
 </html>

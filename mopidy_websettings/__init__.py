@@ -192,10 +192,13 @@ class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
 
 def websettings_app_factory(config, core):
+    from mopidy.http.handlers import StaticFileHandler
+    path = os.path.join(os.path.dirname(__file__), 'js')
     return [
         ('/',        WebSettingsRequestHandler, {'config': config}),
         ('/save',    WebPostRequestHandler,     {'config': config}),
         ('/apply',   WebApplyRequestHandler,                      ),
         ('/reboot',  WebRebootRequestHandler,                     ),
-        ('/shutdown', WebShutdownRequestHandler,                  )
+        ('/shutdown', WebShutdownRequestHandler,                  ),
+        (r'/js/(.*)', StaticFileHandler, {'path': path}           )
     ]
