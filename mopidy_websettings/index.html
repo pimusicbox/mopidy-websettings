@@ -91,12 +91,12 @@
             <p>Set the default webclient.</p>
             <div>
                 <select name="musicbox__webclient" data-native-menu="true">
-                    <option value=""{% if musicbox__webclient == "musicbox_webclient" or musicbox__webclient == "" %} selected="true"{% endif %}>Musicbox</option>
-                    <option value=""{% if musicbox__webclient == "kuechenradio" %} selected="true"{% endif %}>Kuechenradio</option>
-                    <option value=""{% if musicbox__webclient == "mobile" %} selected="true"{% endif %}>Mobile</option>
-                    <option value=""{% if musicbox__webclient == "moped" %} selected="true"{% endif %}>Moped</option>
-                    <option value=""{% if musicbox__webclient == "mopify" %} selected="true"{% endif %}>Mopify</option>
-                    <option value=""{% if musicbox__webclient == "simple-webclient" %} selected="true"{% endif %}>Simple</option>
+                    <option value="musicbox_webclient"{% if musicbox__webclient == "musicbox_webclient" or musicbox__webclient == "" %} selected="true"{% endif %}>Musicbox</option>
+                    <option value="kuechenradio"{% if musicbox__webclient == "kuechenradio" %} selected="true"{% endif %}>Kuechenradio</option>
+                    <option value="mobile"{% if musicbox__webclient == "mobile" %} selected="true"{% endif %}>Mobile</option>
+                    <option value="moped"{% if musicbox__webclient == "moped" %} selected="true"{% endif %}>Moped</option>
+                    <option value="mopify"{% if musicbox__webclient == "mopify" %} selected="true"{% endif %}>Mopify</option>
+                    <option value="simple-webclient"{% if musicbox__webclient == "simple-webclient" %} selected="true"{% endif %}>Simple</option>
                 </select>
             </div>
             
