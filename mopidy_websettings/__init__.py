@@ -11,18 +11,14 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 import jinja2
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 logger = logging.getLogger(__name__)
 
 spec_file = os.path.join(os.path.dirname(__file__), 'settingsspec.ini')
 template_file = os.path.join(os.path.dirname(__file__), 'index.html')
-#config_file = '/etc/mopidy/mopidy.conf'
-
-#log_file = '/var/log/mopidy/mopidy.log'
-
 password_mask = '*'
-reboot_required = ['network', 'musicbox']
+
 
 def restart_program():
     """
@@ -35,6 +31,7 @@ def restart_program():
     
     python = sys.executable
     os.execl(python, python, * sys.argv)
+
 
 class Extension(ext.Extension):
     dist_name = 'Mopidy-WebSettings'
@@ -58,6 +55,7 @@ class Extension(ext.Extension):
             'factory': websettings_app_factory,
         })
 
+
 class WebSettingsRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self, config):
@@ -68,79 +66,90 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         templateEnv = jinja2.Environment( loader=templateLoader )
         template = templateEnv.get_template(template_file)
         error = ''
-        #read config file
+
+        # Read config file
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
-        except (ConfigObjError, IOError), e:
-            error = 'Could not load ini file! %s %s %s' % (e, ConfigObjError, IOError)
-        #read values of valid items (in the spec-file)
+        except (ConfigObjError, IOError) as e:
+            error = 'Could not load ini file! %s' % e
+            logger.error(error)
+
+        templateVars = { 'error': error }
+        # Read values of valid items (in the spec-file)
         validItems = ConfigObj(spec_file, encoding='utf8')
-        templateVars = {
-            "error": error
-        }
-        #iterate over the valid items to get them into the template
+        # Iterate over the valid items to get them into the template
         for item in validItems:
             for subitem in validItems[item]:
                 itemName = item + '__' + subitem
                 try:
                     configValue = iniconfig[item][subitem]
                     #compare last 8 caracters of subitemname
-                    if subitem[-8:] == 'password' and configValue != '':
-                        configValue = password_mask * len(iniconfig[item][subitem])
+                    if subitem.endswith('password') and configValue:
+                        configValue = password_mask * len(configValue)
                     templateVars[itemName] = configValue
                 except:
                     pass
 
         self.write(template.render ( templateVars ) )
 
+
 class WebPostRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self, config):
         self.config_file = config.get('websettings')['config_file']
 
+    def needs_reboot(self, item, subItem):
+        reboot_sections = ['network', 'musicbox']
+        restart_subsections = ['webclient']
+        if item in reboot_sections:
+            # Restarting Mopidy is sufficient for some subsections.
+            if subItem not in restart_subsections:
+                return True
+        return False
+
     def post(self):
         apply_html = ''
         apply_string = 'restart Mopidy'
-        error = ''
+        status = ''
         try:
             iniconfig = ConfigObj(self.config_file, configspec=spec_file, file_error=True, encoding='utf8')
-        except (ConfigObjError, IOError), e:
-            error = 'Could not load ini file!'
-        if error == '':
             validItems = ConfigObj(spec_file, encoding='utf8')
-            templateVars = {
-                "error": error
-            }
-            #iterate over the items, so that only valid items are processed
+            # Iterate over the items, so that only valid items are processed
             for item in validItems:
                 for subitem in validItems[ item ]:
                     itemName = item + '__' + subitem
+
                     argumentItem = self.get_argument(itemName, default='')
                     if argumentItem:
                         #don't edit config value if password mask
                         if subitem[-8:] == 'password':
                           if argumentItem == (password_mask * len(argumentItem)) or argumentItem == '':
                               continue
-                        #create section entry if it doesn't exist
-                        try:
-                            # Check if changing this setting requires a system reboot.
-                            if iniconfig[item][subitem] != argumentItem and item in reboot_required:
-                                apply_string = 'reboot system'
-                            iniconfig[item][subitem] = argumentItem
-                        except:
-                            iniconfig[item] = {}
-                            iniconfig[item][subitem] = argumentItem
-            if iniconfig['audio']['mixer'] == 'alsamixer':
-                iniconfig['alsamixer']['enabled'] = 'true'
-            else:
-                iniconfig['alsamixer']['enabled'] = 'false'
+                        # Create default entry if it doesn't already exist
+                        oldItem = iniconfig.setdefault(item, {}).setdefault(subitem, '')
+                        # Check if changing this setting requires a system reboot.
+                        if oldItem != argumentItem and self.needs_reboot(item, subitem):
+                            apply_string = 'reboot system'
+                        iniconfig[item][subitem] = argumentItem
+            # Ensure the alsamixer and audio/mixer settings are consistent.
+            try:
+                if iniconfig['audio']['mixer'] == 'alsamixer':
+                    iniconfig['alsamixer']['enabled'] = 'true'
+                else:
+                    iniconfig['alsamixer']['enabled'] = 'false'
+            except:
+                pass
 
             iniconfig.write()
-            error = 'Settings Saved!'
+            status = 'Settings Saved!'
             apply_html = '<form action="apply" method="post"><input type="submit" name="method" value="Apply changes now (' + apply_string + ')" />'
+        except (ConfigObjError, IOError) as e:
+            status = 'Could not load ini file! %s' % e
+            logger.error(status)
 
-        message = '<html><body><h1>' + error + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
+        message = '<html><body><h1>' + status + '</h1><p>' + apply_html + '<br/><br/><a href="/">Home</a><br/></p></body></html>'
         self.write(message)
+
 
 class WebApplyRequestHandler(tornado.web.RequestHandler):
 
@@ -161,6 +170,7 @@ class WebApplyRequestHandler(tornado.web.RequestHandler):
         message = '<html><body><h1>' + status + '</h1><br/><br/><a href="/">Home</a><br/></p></body></html>'
         self.write(message)
 
+
 class WebRebootRequestHandler(tornado.web.RequestHandler):
 
     def initialize(self): pass
@@ -169,6 +179,7 @@ class WebRebootRequestHandler(tornado.web.RequestHandler):
         logger.info('Halting system')
         os.system("sudo shutdown -r now")
         os.system("shutdown -r now")
+
 
 class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
@@ -181,10 +192,13 @@ class WebShutdownRequestHandler(tornado.web.RequestHandler):
 
 
 def websettings_app_factory(config, core):
+    from mopidy.http.handlers import StaticFileHandler
+    path = os.path.join(os.path.dirname(__file__), 'js')
     return [
         ('/',        WebSettingsRequestHandler, {'config': config}),
         ('/save',    WebPostRequestHandler,     {'config': config}),
         ('/apply',   WebApplyRequestHandler,                      ),
         ('/reboot',  WebRebootRequestHandler,                     ),
-        ('/shutdown', WebShutdownRequestHandler,                  )
+        ('/shutdown', WebShutdownRequestHandler,                  ),
+        (r'/js/(.*)', StaticFileHandler, {'path': path}           )
     ]
