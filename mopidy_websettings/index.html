@@ -194,15 +194,6 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="network__mount_password">Password</label>
             <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15"/>
 
-            <label for="musicbox__resize_once">Resize filesystem</label>
-            <p>Enable this to let MusicBox automatically resize the filesystem of your SD Card, so the system uses all the space of your card. Recommended because otherwise the card might fill up. This is beta, you can lose data on your card if you enable this!! (If so, you can put the original MusicBox image on it again and start over) </p>
-            <div>
-                <select name="musicbox__resize_once" data-role="slider"><br/>
-                    <option value="false"{% if musicbox__resize_once == "false" %} selected="true"{% endif %}>Off</option>
-                    <option value="true"{% if musicbox__resize_once == "true" %} selected="true"{% endif %}>On</option>
-                </select>
-            </div>
-
         </div>
 
         {% endif %}
