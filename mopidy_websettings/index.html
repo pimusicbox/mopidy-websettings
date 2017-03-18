@@ -61,7 +61,7 @@
             <input type="text" name="network__workgroup" value="{{ network__workgroup }}" size="15" maxlength="40"/>
 
             <label for="network__enable_ssh">Enable SSH</label>
-            <p>For security reasons, change the root password if you enable this.</p>
+            <p>For security reasons, <b>ensure you have changed the root password</b> if you enable this.</p>
             <div>
                 <select name="network__enable_ssh" data-role="slider"><br/>
                     <option value="false"{% if network__enable_ssh == "false" %} selected="true"{% endif %}>Off</option>
@@ -72,20 +72,21 @@
 
         <div data-role="collapsible" class="settingscoll">
             <h2>MusicBox</h2>
+            <label for="musicbox__root_password">Root password</label>
+            <p>To secure your device <b>you should change the default system password</b> to something else.</p>
+            <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15"/>
+
             <label for="network__name">Device name</label>
             <p>Set the name of the MusicBox. In this way you can create different devices on the same network (in different rooms). The webinterface is accessible via the name you use here, e.g. http://kitchen.local/, and multiple devices will show up in AirTunes. You can only use normal caracters and numbers in the name (no spaces, dots, etc). You can even have different devices with different Spotify accounts when needed.</p>
             <input type="text" name="network__name" value="{{ network__name }}" size="12" maxlength="9"/>
 
-            <label for="musicbox__autoplay">Autoplay Url</label>
-            <p>MusicBox can automatically start playing a radiostation or stream at startup. It will wait a number of seconds before trying to play, to give the system (Mopidy) time to start. Since this time can vary per device, network and configuration, you can also set the number of seconds. If it does not work, give the system more time, e.g. 60 seconds.</p>
+            <label for="musicbox__autoplay">Autoplay URI</label>
+            <p>MusicBox can automatically start playing a stream or track at startup. The URI to use can be obtained from the <a href="/musicbox_webclient/index.html#stream">Streams</a> page or the track's popup menu.</p>
             <input type="text" name="musicbox__autoplay" value="{{ musicbox__autoplay }}" size="15" maxlength="300"/>
 
-            <label for="musicbox__autoplaymaxwait">Wait time in seconds for the system to become ready before autoplaying.</label>
-            <input type="range" name="musicbox__autoplaymaxwait" value="{{ autoplaywait }}" min="0" max="600">
-
-            <label for="musicbox__root_password">Root password</label>
-            <p>To secure your device, you can change the default password of root, the superuser.</p>
-            <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15"/>
+            <label for="musicbox__autoplaymaxwait">Autoplay timeout</label>
+            <p>The maximum waiting time (in seconds) for the system to become ready for autoplaying. If this expires, autoplaying is skipped. Some systems are slow to start and may require longer.</p>
+            <input type="range" name="musicbox__autoplaymaxwait" value="{{ musicbox__autoplaymaxwait }}" min="0" max="600">
 
             <label for="musicbox__webclient">Default webclient</label>
             <p>Set the default webclient.</p>
@@ -101,7 +102,7 @@
             </div>
             
             <label for="musicbox__enable_shairport">AirPlay Streaming</label>
-            <p>Enable streaming audio from iPhone, iPad, Mac, iPod using ShairPort (AirPlay) to MusicBox.</p>
+            <p>Enable streaming audio to MusicBox from iPhone/iPad/Mac/iPod using ShairPort-Sync (AirPlay).</p>
             <div>
                 <select name="musicbox__enable_shairport" data-role="slider"><br/>
                     <option value="false"{% if musicbox__enable_shairport == "false" %} selected="true"{% endif %}>Off</option>
@@ -109,8 +110,8 @@
                 </select>
             </div>
 
-            <label for="musicbox__enable_upnp">DLNA/uPnP/OpenHome Streaming</label>
-            <p>Enable streaming music to MusicBox using DLNA/uPnP/OpenHome.</p>
+            <label for="musicbox__enable_upnp">DLNA/UPnP/OpenHome Streaming</label>
+            <p>Enable streaming audio to MusicBox from DLNA/UPnP/OpenHome devices using upmpdcli (UPnP).</p>
             <div>
                 <select name="musicbox__enable_upnp" data-role="slider"><br/>
                     <option value="false"{% if musicbox__enable_upnp == "false" %} selected="true"{% endif %}>Off</option>
