@@ -357,7 +357,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Podcasts</h2>
-            <p>Play Podcasts from iTunes and Gpodder.net.</p>
+            <p>Browse podcasts distributed as RSS feeds and play individual episodes in a variety of audio formats.
+            Edit the subscription file at /boot/config/Podcasts.opml</p>
             <div>
                 <select name="podcast__enabled" data-role="slider"><br/>
                     <option value="false"{% if podcast__enabled == "false" %} selected="true"{% endif %}>Off</option>
@@ -374,7 +375,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>TuneIn</h2>
-            <p>Select radiostations from TuneIn directory.</p>
+            <p>Play radio stations from TuneIn.</p>
             <div>
                 <select name="tunein__enabled" data-role="slider"><br/>
                     <option value="false"{% if tunein__enabled == "false" %} selected="true"{% endif %}>Off</option>
@@ -385,7 +386,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Dirble</h2>
-            <p>Enable Dirble webradio directory.</p>
+            <p>Play radio stations from Dirble.</p>
             <div>
                 <select name="dirble__enabled" data-role="slider"><br/>
                     <option value="false"{% if dirble__enabled == "false" %} selected="true"{% endif %}>Off</option>
