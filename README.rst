@@ -58,6 +58,11 @@ Project resources
 Changelog
 =========
 
+v0.1.6.1 (18/3/2016)
+--------------------
+
+- Added JustBoom audio cards.
+
 v0.1.6 (18/3/2016)
 --------------------
 
