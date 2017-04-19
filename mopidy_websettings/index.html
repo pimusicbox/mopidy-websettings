@@ -68,6 +68,17 @@
                     <option value="true"{% if network__enable_ssh == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
+
+            <label for="network__enable_firewall">Enable Firewall</label>
+            <p>Enable this to block network connections on ports other than those explicitly required by Musicbox.
+               This may prevent any additional network programs from working correctly.
+               This should be enabled <i>alongside other security hardening methods</i> if using Musicbox outside of your LAN (not recommended).</p>
+            <div>
+                <select name="network__enable_firewall" data-role="slider"><br/>
+                    <option value="false"{% if network__enable_firewall == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if network__enable_firewall == "true" %} selected="true"{% endif %}>On</option>
+                </select>
+            </div>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
