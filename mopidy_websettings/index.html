@@ -68,6 +68,17 @@
                     <option value="true"{% if network__enable_ssh == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
+
+            <label for="network__enable_firewall">Enable Firewall</label>
+            <p>Enable this to block network connections on ports other than those explicitly required by Musicbox.
+               This may prevent any additional network programs from working correctly.
+               This should be enabled <i>alongside other security hardening methods</i> if using Musicbox outside of your LAN (not recommended).</p>
+            <div>
+                <select name="network__enable_firewall" data-role="slider"><br/>
+                    <option value="false"{% if network__enable_firewall == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if network__enable_firewall == "true" %} selected="true"{% endif %}>On</option>
+                </select>
+            </div>
         </div>
 
         <div data-role="collapsible" class="settingscoll">
@@ -142,13 +153,17 @@
             <option value="analog"{% if musicbox__output == "analog" %} selected="true"{% endif %}>Analog</option>
             <option value="usb"{% if musicbox__output == "usb" %} selected="true"{% endif %}>USB</option>
             <option value="hdmi"{% if musicbox__output == "hdmi" %} selected="true"{% endif %}>HDMI</option>
-            <option value="justboom_dac"{% if musicbox__output == "justboom_dac" %} selected="true"{% endif %}>JustBoom DAC</option>
+            <option value="justboom_dac"{% if musicbox__output == "justboom_dac" %} selected="true"{% endif %}>JustBoom DAC/AMP</option>
             <option value="justboom_digi"{% if musicbox__output == "justboom_digi" %} selected="true"{% endif %}>JustBoom Digi</option>
-            <option value="hifiberry_dac"{% if musicbox__output == "hifiberry_dac" %} selected="true"{% endif %}>HifiBerry DAC</option>
+            <option value="hifiberry_dac"{% if musicbox__output == "hifiberry_dac" %} selected="true"{% endif %}>HifiBerry DAC / pHAT DAC</option>
             <option value="hifiberry_digi"{% if musicbox__output == "hifiberry_digi" %} selected="true"{% endif %}>HifiBerry Digi</option>
             <option value="hifiberry_dacplus"{% if musicbox__output == "hifiberry_dacplus" %} selected="true"{% endif %}>HifiBerry DAC+</option>
             <option value="hifiberry_amp"{% if musicbox__output == "hifiberry_amp" %} selected="true"{% endif %}>HifiBerry AMP</option>
-            <option value="iqaudio_dac"{% if musicbox__output == "iqaudio_dac" %} selected="true"{% endif %}>IQ Audio DAC</option>
+            <option value="iqaudio_dacplus"{% if musicbox__output == "iqaudio_dacplus" %} selected="true"{% endif %}>IQ Audio DAC+/Zero/PRO/AMP+</option>
+            <option value="iqaudio_digi_wm8804_audio"{% if musicbox__output == "iqaudio_digi_wm8804_audio" %} selected="true"{% endif %}>IQ Audio Digi+</option>
+            <option value="allo_boss_dac_pcm512x_audio"{% if musicbox__output == "allo_boss_dac_pcm512x_audio" %} selected="true"{% endif %}>Allo Boss DAC</option>
+            <option value="allo_piano_dac_pcm512x_audio"{% if musicbox__output == "allo_piano_dac_pcm512x_audio" %} selected="true"{% endif %}>Allo Piano DAC</option>
+            <option value="allo_piano_dac_plus_pcm512x_audio"{% if musicbox__output == "allo_piano_dac_plus_pcm512x_audio" %} selected="true"{% endif %}>Allo Piano DAC+</option>
         </select>
 
             <label for="musicbox__downsample_usb">Downsample USB</label>
@@ -357,7 +372,8 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Podcasts</h2>
-            <p>Play Podcasts from iTunes and Gpodder.net.</p>
+            <p>Browse podcasts distributed as RSS feeds and play individual episodes in a variety of audio formats.
+            Edit the subscription file at /boot/config/Podcasts.opml</p>
             <div>
                 <select name="podcast__enabled" data-role="slider"><br/>
                     <option value="false"{% if podcast__enabled == "false" %} selected="true"{% endif %}>Off</option>
@@ -374,7 +390,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>TuneIn</h2>
-            <p>Select radiostations from TuneIn directory.</p>
+            <p>Play radio stations from TuneIn.</p>
             <div>
                 <select name="tunein__enabled" data-role="slider"><br/>
                     <option value="false"{% if tunein__enabled == "false" %} selected="true"{% endif %}>Off</option>
@@ -385,7 +401,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
         <div data-role="collapsible" class="settingscoll">
             <h2>Dirble</h2>
-            <p>Enable Dirble webradio directory.</p>
+            <p>Play radio stations from Dirble.</p>
             <div>
                 <select name="dirble__enabled" data-role="slider"><br/>
                     <option value="false"{% if dirble__enabled == "false" %} selected="true"{% endif %}>Off</option>

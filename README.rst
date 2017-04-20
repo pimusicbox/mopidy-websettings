@@ -58,7 +58,20 @@ Project resources
 Changelog
 =========
 
-v0.1.6 (18/3/2016)
+v0.1.6.2 (21/4/2017)
+--------------------
+
+- Added firewall setting.
+- Updated support for IQ Audio and Allo DAC soundcards.
+- Updated podcast settings.
+- Fixed missing javascript files from previous release. 
+
+v0.1.6.1 (18/3/2017)
+--------------------
+
+- Added JustBoom audio cards.
+
+v0.1.6 (18/3/2017)
 --------------------
 
 - Updated and improved explanations for settings.
