@@ -58,6 +58,14 @@ Project resources
 Changelog
 =========
 
+v0.1.7 (18/7/2017)
+--------------------
+
+- Added WiFi country setting.
+- Added MPD Watchdog setting.
+- Increased WiFi password input to support 64 character hex keys.
+- Added Spotify Connect setting.
+
 v0.1.6.2 (21/4/2017)
 --------------------
 
