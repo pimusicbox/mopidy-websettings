@@ -55,6 +55,10 @@
             <input type="text" name="network__wifi_network" value="{{ network__wifi_network }}" size="15" maxlength="40"/>
             <label for="network__wifi_password">Wifi Password</label>
             <input type="password" name="network__wifi_password" value="{{ network__wifi_password }}" size="10" maxlength="63"/>
+            <label for="network__wifi_country">Wifi Country</label>
+            <p>Optionally specify your <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes" target="_blank">country code</a>
+            to ensure all available wifi channels are made enabled. For example: GB</p>
+            <input type="text" name="network__wifi_country" value="{{ network__wifi_country }}" size="2" maxlength="2"/>
 
             <label for="network__workgroup">Workgroup</label>
             <p>Here you can change the default workgroup of the Windows network. This will set the workgroup to the name you want</p>
