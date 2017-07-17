@@ -116,6 +116,15 @@
                 </select>
             </div>
             
+            <label for="musicbox__enable_stream_watchdog">Stream Watchdog</label>
+            <p>Monitor and automatically restart internet streams when the network connection is restored following a dropout.</p>
+            <div>
+                <select name="musicbox__enable_stream_watchdog" data-role="slider"><br/>
+                    <option value="false"{% if musicbox__enable_stream_watchdog == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__enable_stream_watchdog == "true" %} selected="true"{% endif %}>On</option>
+                </select>
+            </div>
+
             <label for="musicbox__enable_shairport">AirPlay Streaming</label>
             <p>Enable streaming audio to MusicBox from iPhone/iPad/Mac/iPod using ShairPort-Sync (AirPlay).</p>
             <div>
