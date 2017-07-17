@@ -143,7 +143,6 @@
                     <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
-
         </div>
 
          {% endif %}
@@ -232,7 +231,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
     <h3>Services</h3>
         <div data-role="collapsible" class="settingscoll">
-            <h2>Spotify / Spotify-Web</h2>
+            <h2>Spotify</h2>
             <p>Enable playing music from Spotify.</p>
             <div>
                 <select name="spotify__enabled" data-role="slider"><br/>
@@ -249,6 +248,13 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif %}>Lowest, low network usage (96kbps)</option>
                 <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif %}>Medium, medium network usage (160kbps)</option>
                 <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif %}>High, higher network usage (320kbps)</option>
+            </select>
+
+            <label for="musicbox__enable_connect">Spotify Connect</label>
+            <p>Enable streaming audio via Spotify Connect (librespot). ** BETA **</p>
+            <select name="musicbox__enable_connect" data-role="slider"><br/>
+                <option value="false"{% if musicbox__enable_connect == "false" %} selected="true"{% endif %}>Off</option>
+                <option value="true"{% if musicbox__enable_connect == "true" %} selected="true"{% endif %}>On</option>
             </select>
 
             <label for="spotify_web__enabled">Spotify-Web</label>
