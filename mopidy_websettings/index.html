@@ -54,7 +54,12 @@
             <label for="network__wifi_network">Wifi Network Name</label>
             <input type="text" name="network__wifi_network" value="{{ network__wifi_network }}" size="15" maxlength="40"/>
             <label for="network__wifi_password">Wifi Password</label>
-            <input type="password" name="network__wifi_password" value="{{ network__wifi_password }}" size="10" maxlength="63"/>
+            <p>Enter your passphrase or 64 character hex key.</p>
+            <input type="password" name="network__wifi_password" value="{{ network__wifi_password }}" size="8" maxlength="64"/>
+            <label for="network__wifi_country">Wifi Country</label>
+            <p>Optionally specify your <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes" target="_blank">country code</a>
+            to ensure all available wifi channels are made enabled. For example: GB</p>
+            <input type="text" name="network__wifi_country" value="{{ network__wifi_country }}" size="2" maxlength="2"/>
 
             <label for="network__workgroup">Workgroup</label>
             <p>Here you can change the default workgroup of the Windows network. This will set the workgroup to the name you want</p>
@@ -112,6 +117,15 @@
                 </select>
             </div>
             
+            <label for="musicbox__enable_stream_watchdog">Stream Watchdog</label>
+            <p>Monitor and automatically restart internet streams when the network connection is restored following a dropout.</p>
+            <div>
+                <select name="musicbox__enable_stream_watchdog" data-role="slider"><br/>
+                    <option value="false"{% if musicbox__enable_stream_watchdog == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if musicbox__enable_stream_watchdog == "true" %} selected="true"{% endif %}>On</option>
+                </select>
+            </div>
+
             <label for="musicbox__enable_shairport">AirPlay Streaming</label>
             <p>Enable streaming audio to MusicBox from iPhone/iPad/Mac/iPod using ShairPort-Sync (AirPlay).</p>
             <div>
@@ -129,7 +143,6 @@
                     <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
-
         </div>
 
          {% endif %}
@@ -218,7 +231,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
 
     <h3>Services</h3>
         <div data-role="collapsible" class="settingscoll">
-            <h2>Spotify / Spotify-Web</h2>
+            <h2>Spotify</h2>
             <p>Enable playing music from Spotify.</p>
             <div>
                 <select name="spotify__enabled" data-role="slider"><br/>
@@ -235,6 +248,13 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 <option value="96"{% if spotify__bitrate == "96" %} selected="true"{% endif %}>Lowest, low network usage (96kbps)</option>
                 <option value="160"{% if spotify__bitrate == "160" %} selected="true"{% endif %}>Medium, medium network usage (160kbps)</option>
                 <option value="320"{% if spotify__bitrate == "320" %} selected="true"{% endif %}>High, higher network usage (320kbps)</option>
+            </select>
+
+            <label for="musicbox__enable_connect">Spotify Connect</label>
+            <p>Enable streaming audio via Spotify Connect (librespot). ** BETA **</p>
+            <select name="musicbox__enable_connect" data-role="slider"><br/>
+                <option value="false"{% if musicbox__enable_connect == "false" %} selected="true"{% endif %}>Off</option>
+                <option value="true"{% if musicbox__enable_connect == "true" %} selected="true"{% endif %}>On</option>
             </select>
 
             <label for="spotify_web__enabled">Spotify-Web</label>
