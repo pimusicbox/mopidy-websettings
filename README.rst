@@ -58,8 +58,13 @@ Project resources
 Changelog
 =========
 
+v0.2.0 (18/7/2017)
+------------------
+
+- Added Mopidy logging configuration setting.
+
 v0.1.7 (18/7/2017)
---------------------
+------------------
 
 - Added WiFi country setting.
 - Added MPD Watchdog setting.
@@ -80,7 +85,7 @@ v0.1.6.1 (18/3/2017)
 - Added JustBoom audio cards.
 
 v0.1.6 (18/3/2017)
---------------------
+------------------
 
 - Updated and improved explanations for settings.
 - Removed development-orientated resize_once option.
@@ -91,7 +96,7 @@ v0.1.6 (18/3/2017)
 - Option to populate autoplay with currently playing track. 
 
 v0.1.5 (2/3/2016)
---------------------
+-----------------
 
 - Fixed password field length restrictions.
 - Apply changes with Mopidy service restart rather than system reboot where possible.
@@ -103,18 +108,18 @@ v0.1.4.2 (26/3/2015)
 - Fixed length of Autoplay URL input box.
 
 v0.1.4.1
-----------------------------------------
+--------
 
 - Small fix for passwords not updated well
 
 v0.1.4
-----------------------------------------
+------
 
 - AudioAddict added (by Nilicule)
 - Passwords mask same size as password
 
 v0.1.3 
-----------------------------------------
+------
 
 - Added YouTube and local support (on or off)
 - Enabled YouTube, SomaFM, Local, Internetarchive, Podcast by default when not in ini-file (the default of the extensions)
@@ -123,19 +128,19 @@ v0.1.3
 - Better layout
 
 v0.1.2
-----------------------------------------
+------
 
 - Fixes for writing ini file
 
 
 v0.1.1 
-----------------------------------------
+------
 
 - Fixed missing template files in dist
 - Fixed template
 - Reboot after settings are updated (if mopidy instance has the permission to do that, like on musicbox)
 
 v0.1.0 
-----------------------------------------
+------
 
 - Initial release
