@@ -143,6 +143,15 @@
                     <option value="true"{% if musicbox__enable_upnp == "true" %} selected="true"{% endif %}>On</option>
                 </select>
             </div>
+
+            <label for="logging__config_file">Mopidy logging</label>
+            <p>Select the logging level required. Debug logging will be found in /tmp/mopidy-debug.log</p>
+            <div>
+                <select name="logging__config_file" data-native-menu="true">
+                    <option value="/etc/mopidy/logging.conf"{% if logging__config_file == "/etc/mopidy/logging.conf" %} selected="true"{% endif %}>Normal</option>
+                    <option value="/etc/mopidy/logging-debug.conf"{% if logging__config_file == "/etc/mopidy/logging-debug.conf" %} selected="true"{% endif %}>Debug</option>
+                </select>
+            </div>
         </div>
 
          {% endif %}
