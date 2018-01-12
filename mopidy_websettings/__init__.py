@@ -13,7 +13,7 @@ from mopidy import config, ext
 
 import tornado.web
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 logger = logging.getLogger(__name__)
 
@@ -24,8 +24,10 @@ template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 def mask(password):
     return '*' * len(password)
 
+
 def is_secret(subitem):
     return subitem.endswith('password') or subitem.endswith('secret')
+
 
 def restart_program():
     """
@@ -150,8 +152,11 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                     iniconfig['alsamixer']['enabled'] = 'false'
                 # spotify and spotify_web should have the same values here.
                 for subitem in ['client_id', 'client_secret']:
-                    iniconfig['spotify'][subitem] = iniconfig['spotify'][subitem] or iniconfig['spotify_web'][subitem]
-                    iniconfig['spotify_web'][subitem] = iniconfig['spotify'][subitem]
+                    iniconfig['spotify'][subitem] = (
+                        iniconfig['spotify'][subitem] or
+                        iniconfig['spotify_web'][subitem])
+                    iniconfig['spotify_web'][subitem] = (
+                        iniconfig['spotify'][subitem])
             except:
                 pass
 
