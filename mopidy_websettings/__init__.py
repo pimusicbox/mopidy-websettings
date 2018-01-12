@@ -24,6 +24,8 @@ template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 def mask(password):
     return '*' * len(password)
 
+def is_secret(subitem):
+    return subitem.endswith('password') or subitem.endswith('secret')
 
 def restart_program():
     """
@@ -91,7 +93,7 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
                 itemName = item + '__' + subitem
                 try:
                     configValue = iniconfig[item][subitem]
-                    if subitem.endswith('password') and configValue:
+                    if is_secret(subitem) and configValue:
                         configValue = mask(configValue)
                     templateVars[itemName] = configValue
                 except:
@@ -130,8 +132,7 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                     value = self.get_argument(itemName, default='')
                     if value:
                         # Skip any masked passwords
-                        if subitem.endswith('password') and \
-                                value == mask(value):
+                        if is_secret(subitem) and value == mask(value):
                             continue
                         # Create default entry if it doesn't already exist
                         oldItem = iniconfig.setdefault(item, {}).setdefault(
@@ -141,12 +142,16 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                                 self.needs_reboot(item, subitem):
                             apply_string = 'reboot system'
                         iniconfig[item][subitem] = value
-            # Ensure the alsamixer and audio/mixer settings are consistent.
+            # Ensure that some of the settings are consistent.
             try:
                 if iniconfig['audio']['mixer'] == 'alsamixer':
                     iniconfig['alsamixer']['enabled'] = 'true'
                 else:
                     iniconfig['alsamixer']['enabled'] = 'false'
+                # spotify and spotify_web should have the same values here.
+                for subitem in ['client_id', 'client_secret']:
+                    iniconfig['spotify'][subitem] = iniconfig['spotify'][subitem] or iniconfig['spotify_web'][subitem]
+                    iniconfig['spotify_web'][subitem] = iniconfig['spotify'][subitem]
             except:
                 pass
 
