@@ -58,6 +58,13 @@ Project resources
 Changelog
 =========
 
+v0.2.1 (12/1/2018)
+------------------
+
+- Moved spotify_web's client_id and client_secret to spotify section.
+- Added support for Allo DigiOne and Mini Boss HiFi DAC.
+- Added support for the latest confusingly named HiFiBerry products (cummon, guys).
+
 v0.2.0 (18/7/2017)
 ------------------
 
