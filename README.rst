@@ -58,6 +58,12 @@ Project resources
 Changelog
 =========
 
+v0.2.2 (14/1/2018)
+------------------
+
+- Updated wording for the new required Spotify credentials.
+
+
 v0.2.1 (12/1/2018)
 ------------------
 

@@ -13,7 +13,7 @@ from mopidy import config, ext
 
 import tornado.web
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 logger = logging.getLogger(__name__)
 
@@ -92,14 +92,12 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         # Iterate over the valid items to get them into the template
         for item in validItems:
             for subitem in validItems[item]:
-                itemName = item + '__' + subitem
-                try:
-                    configValue = iniconfig[item][subitem]
-                    if is_secret(subitem) and configValue:
+                configValue = iniconfig.get(item, {}).get(subitem, None)
+                if configValue is not None:
+                    if is_secret(subitem):
                         configValue = mask(configValue)
+                    itemName = item + '__' + subitem
                     templateVars[itemName] = configValue
-                except:
-                    pass
 
         self.write(template.render(templateVars))
 
@@ -157,8 +155,8 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
                         iniconfig['spotify_web'][subitem])
                     iniconfig['spotify_web'][subitem] = (
                         iniconfig['spotify'][subitem])
-            except:
-                pass
+            except KeyError as e:
+                logger.error('Error making config consistent %s', e)
 
             iniconfig.write()
             status = 'Settings Saved!'
