@@ -58,6 +58,18 @@ Project resources
 Changelog
 =========
 
+v0.2.3 (25/2/2018)
+------------------
+
+- Support for AudioInjector stereo and octo cards.
+
+
+v0.2.2 (14/1/2018)
+------------------
+
+- Updated wording for the new required Spotify credentials.
+
+
 v0.2.1 (12/1/2018)
 ------------------
 
