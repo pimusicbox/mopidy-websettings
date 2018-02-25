@@ -13,7 +13,7 @@ from mopidy import config, ext
 
 import tornado.web
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 logger = logging.getLogger(__name__)
 
