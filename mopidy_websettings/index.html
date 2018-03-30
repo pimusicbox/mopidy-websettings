@@ -487,6 +487,29 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
         </div>
 
         <div data-role="collapsible" class="settingscoll">
+            <h2>Tidal</h2>
+            <p>Enable playing music from Tidal.</p>
+            <div>
+                <select name="tidal__enabled" data-role="slider"><br/>
+                    <option value="false"{% if tidal__enabled == "false" %} selected="true"{% endif %}>Off</option>
+                    <option value="true"{% if tidal__enabled == "true" %} selected="true"{% endif %}>On</option>
+                </select>
+            </div>
+            <label for="tidal__username">Username</label>
+            <input type="text" name="tidal__username" value="{{ tidal__username }}" size="40" maxlength="40"/>
+            <label for="tidal__password">Password</label>
+            <input type="password" name="tidal__password" value="{{ tidal__password }}" size="40"/>
+            <label for="tidal_quality">Music Quality</label>
+            <p>Lossless quality requires a Tidal HiFi Subscription</p>
+            <select name="tidal_quality">
+                <option value="LOW"{% if tidal_quality == "LOW" %} selected="true"{% endif %}>Low (256Kbps)</option>
+                <option value="HIGH"{% if tidal_quality == "HIGH" %} selected="true"{% endif %}>High (320Kbps)</option>
+                <option value="LOSSLESS"{% if tidal_quality == "LOSSLESS" %} selected="true"{% endif %}>Lossless (1411Kbps)</option>
+            </select>
+        </div>
+
+<!--
+        <div data-role="collapsible" class="settingscoll">
             <h2>Subsonic</h2>
             <p>Enable subsonic musicstreamer support.</p>
             <div>
@@ -511,6 +534,7 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
                 </select>
             </div>
         </div>
+-->
         <input type="submit" value="Save" />
       </form>
       <br/><br/>
