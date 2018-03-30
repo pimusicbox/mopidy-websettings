@@ -237,6 +237,11 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
             <label for="network__mount_password">Password</label>
             <input type="password" name="network__mount_password" value="{{ network__mount_password }}" size="15"/>
 
+            <label for="network__mount_options">Additional Mount Options</label>
+            <p>Depending on your file server you may need to specify a different protocol version or other options.
+               See <a href="https://linux.die.net/man/8/mount.cifs" target="_blank">here</a> for further details.</p>
+            <input type="text" name="network__mount_options" value="{{ network__mount_options }}" size="15"/>
+
         </div>
 
         {% endif %}
