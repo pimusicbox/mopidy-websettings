@@ -21,12 +21,13 @@ spec_file = os.path.join(os.path.dirname(__file__), 'settingsspec.ini')
 template_file = os.path.join(os.path.dirname(__file__), 'index.html')
 
 
-def mask(password):
-    return '*' * len(password)
+def can_change_root_password(ini):
+    root_password = ini.get('musicbox', {}).get('root_password', '')
+    return len(root_password)
 
 
-def is_secret(subitem):
-    return subitem.endswith('password') or subitem.endswith('secret')
+def get_name(item, subitem):
+    return item + '__' + subitem
 
 
 def restart_program():
@@ -86,7 +87,10 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
             error = 'Could not load ini file! %s' % e
             logger.error(error)
 
-        templateVars = {'error': error}
+        templateVars = {
+            'error': error,
+            'change_root_password': can_change_root_password(iniconfig)
+        }
         # Read values of valid items (in the spec-file)
         validItems = ConfigObj(spec_file, encoding='utf8')
         # Iterate over the valid items to get them into the template
@@ -94,9 +98,7 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
             for subitem in validItems[item]:
                 configValue = iniconfig.get(item, {}).get(subitem, None)
                 if configValue is not None:
-                    if is_secret(subitem):
-                        configValue = mask(configValue)
-                    itemName = item + '__' + subitem
+                    itemName = get_name(item, subitem)
                     templateVars[itemName] = configValue
 
         self.write(template.render(templateVars))
@@ -127,13 +129,14 @@ class WebPostRequestHandler(tornado.web.RequestHandler):
             # Iterate over the items, so that only valid items are processed
             for item in validItems:
                 for subitem in validItems[item]:
-                    itemName = item + '__' + subitem
+                    itemName = get_name(item, subitem)
+
+                    if itemName == get_name('musicbox', 'root_password') and \
+                            not can_change_root_password(iniconfig):
+                        continue
 
                     value = self.get_argument(itemName, default='')
                     if value:
-                        # Skip any masked passwords
-                        if is_secret(subitem) and value == mask(value):
-                            continue
                         # Create default entry if it doesn't already exist
                         oldItem = iniconfig.setdefault(item, {}).setdefault(
                             subitem, '')

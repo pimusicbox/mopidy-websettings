@@ -66,7 +66,9 @@
             <input type="text" name="network__workgroup" value="{{ network__workgroup }}" size="15" maxlength="40"/>
 
             <label for="network__enable_ssh">Enable SSH</label>
-            <p>For security reasons, <b>ensure you have changed the root password</b> if you enable this.</p>
+            {% if change_root_password %}
+            <p><b>You should change the root password before enabling this.</b></p>
+            {% endif %}
             <div>
                 <select name="network__enable_ssh" data-role="slider"><br/>
                     <option value="false"{% if network__enable_ssh == "false" %} selected="true"{% endif %}>Off</option>
@@ -89,9 +91,12 @@
         <div data-role="collapsible" class="settingscoll">
             <h2>MusicBox</h2>
             <label for="musicbox__root_password">Root password</label>
+            {% if change_root_password %}
             <p>To secure your device <b>you should change the default system password</b> to something else.</p>
             <input type="password" name="musicbox__root_password" value="{{ musicbox__root_password }}" size="15"/>
-
+            {% else %}
+            <p>Manually edit settings.ini to change the system password again.</p>
+            {% endif %}
             <label for="network__name">Device name</label>
             <p>Set the name of the MusicBox. In this way you can create different devices on the same network (in different rooms). The webinterface is accessible via the name you use here, e.g. http://kitchen.local/, and multiple devices will show up in AirTunes. You can only use normal caracters and numbers in the name (no spaces, dots, etc). You can even have different devices with different Spotify accounts when needed.</p>
             <input type="text" name="network__name" value="{{ network__name }}" size="12" maxlength="9"/>
