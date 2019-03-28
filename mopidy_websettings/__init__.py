@@ -77,7 +77,6 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
         templateEnv = jinja2.Environment(loader=templateLoader)
         template = templateEnv.get_template(template_file)
-        error = ''
 
         # Read config file
         try:
@@ -86,9 +85,10 @@ class WebSettingsRequestHandler(tornado.web.RequestHandler):
         except (ConfigObjError, IOError) as e:
             error = 'Could not load ini file! %s' % e
             logger.error(error)
+            self.write(error)
+            return
 
         templateVars = {
-            'error': error,
             'change_root_password': can_change_root_password(iniconfig)
         }
         # Read values of valid items (in the spec-file)
