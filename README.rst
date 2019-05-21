@@ -26,7 +26,7 @@ Installation
 
 Install by running::
 
-    pip install Mopidy-WebSettings
+    sudo pip install Mopidy-WebSettings
 
 Or, if available, install the Debian/Ubuntu package from `apt.mopidy.com
 <http://apt.mopidy.com/>`_.
