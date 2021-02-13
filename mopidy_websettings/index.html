@@ -371,24 +371,6 @@ If the mount needs a username/password, also set it (leave empty for guest-acces
         </div>
 
         <div data-role="collapsible" class="settingscoll">
-            <h2>Google Music</h2>
-            <p>Please provide your username, password to enable Google Music.</p>
-            <div>
-                <select name="gmusic__enabled" data-role="slider"><br/>
-                    <option value="false"{% if gmusic__enabled == "false" %} selected="true"{% endif %}>Off</option>
-                    <option value="true"{% if gmusic__enabled == "true" %} selected="true"{% endif %}>On</option>
-                </select>
-            </div>
-            <label for="gmusic__username">Username</label>
-            <input type="text" name="gmusic__username" value="{{ gmusic__username }}" size="15" maxlength="40"/>
-            <label for="gmusic__password">Password</label>
-            <p>If you use 2-way authentication, you need an application-specific password.</p>
-            <input type="password" name="gmusic__password" value="{{ gmusic__password }}" size="10"/>
-            <p>You may need to supply a device ID. See <a href="https://github.com/mopidy/mopidy-gmusic#configuration">here</a> for more information.</p>
-            <input type="text" name="gmusic__deviceid" value="{{ gmusic__deviceid }}" size="10" maxlength="40"/>
-        </div>
-
-        <div data-role="collapsible" class="settingscoll">
             <h2>Last.FM</h2>
             <p>Please provide your username, password to enable scrobbling music to Last.FM.</p>
             <div>
